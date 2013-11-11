@@ -19,7 +19,7 @@ class Scrapper
   end
 
   def self.sanitize_html(html)
-    Sanitize.clean(html, Sanitize::Config::RESTRICTED)
+    Sanitize.clean(html, Sanitize::Config::RESTRICTED, elements: ['img'])
   end
 
   def self.tidy_html(html)

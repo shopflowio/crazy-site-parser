@@ -1,0 +1,200 @@
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+.menu {
+	Font-Size: 9pt;
+	Color: White;
+	Text-Decoration: none;
+	Font-Weight: Bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.menu a {
+	Font-Size: 9pt;
+	Color: White;
+	Text-Decoration: none;
+	Font-Weight: Bold;
+}
+.menu a:hover {
+	Font-Size: 9pt;
+	Color: Yellow;
+	Text-Decoration: none;
+	Font-Weight: Bold;
+}
+.menu1 {
+	font-family: Arial, sans-serif;   
+	font-size: 12px;
+	color: #000000;
+}
+.menu1 a {text-decoration: none; color: #000000;}
+.menu1 a:hover {text-decoration: none; color: #006600;}
+
+.y9 {
+	font-family: Arial, sans-serif;   
+	font-size: 9px;
+	color: #FFCC00;
+}
+.y9 a {text-decoration: none; color: #FFCC00;}
+.y9 a:hover {text-decoration: underline; color: #FFCC00;}
+
+.a14 {
+	font-family: Arial, sans-serif;   
+	font-size: 14px;
+	color: #336633;
+}
+
+.base {
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	color: #003300;
+	font-weight: bold;
+}
+.base a {
+text-decoration: 
+underline; 
+color: #003300;
+}
+.base a:hover {
+text-decoration: 
+none; 
+color: #003300;
+}
+
+.body {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	color: #003300;
+	line-height: 16px;
+}
+.body a {
+text-decoration: underline; 
+color: #003300;
+}
+.body a:hover {
+text-decoration: none; 
+color: #003300;
+}
+
+.base1 {
+	font-family: Arial, sans-serif;   
+	font-size: 12px;
+	color: #663366;
+}
+.base1 a {text-decoration: underline; color: #663366;}
+.base1 a:hover {text-decoration: none; color: #663366;}
+
+.base2 {
+	font-family: Arial, sans-serif;   
+	font-size: 12px;
+	color: #003333;
+}
+
+a.m {text-decoration: none; color: #663366;}
+a.m:hover {text-decoration: none; color: #006600;}
+
+#list {margin: 0px 0px 0px 25px; text-indent: -20px;}
+
+.a9 {
+	font-family: Arial, sans-serif;   
+	font-size: 9px;
+	color: #663366;
+}
+
+.baseH {
+	font-family: Arial, sans-serif;
+	font-size: 18px;
+	color: #003300;
+	margin-left: 50px;
+	font-weight: bold;
+}
+.baseH a {
+text-decoration: underline; 
+color: #003300;
+}
+.baseH a:hover {
+text-decoration: none; 
+color: #003300;
+}
+
+.baseL {
+	font-family: Arial, sans-serif;
+	font-size: 18px;
+	color: #104310;
+}
+.baseL a {
+text-decoration: underline; 
+color: #003300;
+}
+.baseL a:hover {
+text-decoration: none; 
+color: #003300;
+}
+
+.form1 {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	background-image: url("http://www.broadviewproduct.com/WIP/img/form_bg.gif");
+}
+
+.foot1 {
+	Font-family: Arial, sans-serif;
+	font-size: 10px;
+	color: Navy;
+	text-decoration: none;
+}
+.foot1 a {
+	Font-family: Arial, sans-serif;
+	font-size: 10px;
+	color: Navy;
+	text-decoration: none;
+}
+.foot1 a:hover {
+	Font-family: Arial, sans-serif;
+	font-size: 10px;
+	color: Navy;
+	text-decoration: underline;
+}
+.lg-header	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 24pt ;
+			Font-Weight : Bold
+		}
+.lg-subhead	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 16pt ;
+			Font-Weight : Bold
+		}
+.body	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 10pt
+		}
+.size-08pt	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 8pt
+		}
+.size-09pt	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 9pt
+		}
+.size-10pt	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 10pt
+		}
+.size-12pt	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 12pt
+		}
+.size-14pt	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 14pt
+		}
+.gold-header	 {
+			Font-Family : Arial, Helvetica, sans-serif ;
+			Font-Size : 16pt ;
+			Color : #888858
+		}

@@ -1,0 +1,132 @@
+BODY {
+	BACKGROUND-COLOR: white; MARGIN-TOP: 0px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.menu {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: white; FONT-SIZE: 9pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.menu A {
+	COLOR: white; FONT-SIZE: 9pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.menu A:hover {
+	COLOR: yellow; FONT-SIZE: 9pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.menu1 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #000000; FONT-SIZE: 12px
+}
+.menu1 A {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+.menu1 A:hover {
+	COLOR: #006600; TEXT-DECORATION: none
+}
+.y9 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #ffcc00; FONT-SIZE: 9px
+}
+.y9 A {
+	COLOR: #ffcc00; TEXT-DECORATION: none
+}
+.y9 A:hover {
+	COLOR: #ffcc00; TEXT-DECORATION: underline
+}
+.a14 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #336633; FONT-SIZE: 14px
+}
+.base {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #003300; FONT-SIZE: 13px; FONT-WEIGHT: bold
+}
+.base A {
+	COLOR: #003300; TEXT-DECORATION: underline
+}
+.base A:hover {
+	COLOR: #003300; TEXT-DECORATION: none
+}
+.body {
+	LINE-HEIGHT: 16px; FONT-FAMILY: Arial, sans-serif; COLOR: #003300; FONT-SIZE: 12px
+}
+.body A {
+	COLOR: #003300; TEXT-DECORATION: underline
+}
+.body A:hover {
+	COLOR: #003300; TEXT-DECORATION: none
+}
+.base1 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #663366; FONT-SIZE: 12px
+}
+.base1 A {
+	COLOR: #663366; TEXT-DECORATION: underline
+}
+.base1 A:hover {
+	COLOR: #663366; TEXT-DECORATION: none
+}
+.base2 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #003333; FONT-SIZE: 12px
+}
+A.m {
+	COLOR: #663366; TEXT-DECORATION: none
+}
+A.m:hover {
+	COLOR: #006600; TEXT-DECORATION: none
+}
+#list {
+	TEXT-INDENT: -20px; MARGIN: 0px 0px 0px 25px
+}
+.a9 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #663366; FONT-SIZE: 9px
+}
+.baseH {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #003300; MARGIN-LEFT: 50px; FONT-SIZE: 18px; FONT-WEIGHT: bold
+}
+.baseH A {
+	COLOR: #003300; TEXT-DECORATION: underline
+}
+.baseH A:hover {
+	COLOR: #003300; TEXT-DECORATION: none
+}
+.baseL {
+	FONT-FAMILY: Arial, sans-serif; COLOR: #104310; FONT-SIZE: 18px
+}
+.baseL A {
+	COLOR: #003300; TEXT-DECORATION: underline
+}
+.baseL A:hover {
+	COLOR: #003300; TEXT-DECORATION: none
+}
+.form1 {
+	BACKGROUND-IMAGE: url(../WIP/img/form_bg.gif); BORDER-BOTTOM: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BACKGROUND-COLOR: #ffffff; FONT-FAMILY: Arial, sans-serif; COLOR: #000000; FONT-SIZE: 12px; BORDER-TOP: #000000 1px solid; BORDER-RIGHT: #000000 1px solid
+}
+.foot1 {
+	FONT-FAMILY: Arial, sans-serif; COLOR: navy; FONT-SIZE: 10px; TEXT-DECORATION: none
+}
+.foot1 A {
+	FONT-FAMILY: Arial, sans-serif; COLOR: navy; FONT-SIZE: 10px; TEXT-DECORATION: none
+}
+.foot1 A:hover {
+	FONT-FAMILY: Arial, sans-serif; COLOR: navy; FONT-SIZE: 10px; TEXT-DECORATION: underline
+}
+.lg-header {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 24pt; FONT-WEIGHT: bold
+}
+.lg-subhead {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 16pt; FONT-WEIGHT: bold
+}
+.body {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 10pt
+}
+.size-08pt {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 8pt
+}
+.size-09pt {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 9pt
+}
+.size-10pt {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 10pt
+}
+.size-12pt {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12pt
+}
+.size-14pt {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 14pt
+}
+.gold-header {
+	FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #888858; FONT-SIZE: 16pt
+}
