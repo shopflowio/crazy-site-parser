@@ -14,7 +14,7 @@ class Scrapper
       data[:url]              = "http://www.delloro.com/#{page}"
       data[:title]            = doc.at_css('title').text if doc.at_css('title')
       data[:meta_description] = doc.at_css('meta[name="DESCRIPTION"]')['content'] if doc.at_css('meta[name="DESCRIPTION"]')
-      data[:content]          = doc.at_css('.maincol').inner_html if doc.at_css('.maincol')
+      data[:content]          = doc.at_css('table[width="622"]').inner_html if doc.at_css('table[width="622"]')
     end
   end
 
@@ -39,11 +39,37 @@ class Scrapper
     tidy_html sanitize_html(html)
   end
 
+  def self.return_inconsistent_pages
+    Dir.chdir('www.broadviewproduct.com')
+    pages = Dir['**/*.htm']
+    results = []
+    inconsistent_pages = []
+
+    for page in pages
+      data = parse_page(page)
+      result = {url: data[:url], content?: !data[:content].nil?}
+      results << result
+    end
+
+    for result in results
+      unless result[:content?]
+        inconsistent_pages << result[:url]
+      end
+    end
+    inconsistent_pages
+  end
+
 end
+
+
 #Dir.chdir('www.broadviewproduct.com')
 #puts pages = Dir['**/*.htm*']
 
-# pages.each do |page|
+#pages.each do |page|
+ #   data = parse_page(page)
+#    puts data[:content]
+#  end
+  # puts Scrapper
 #   new_path = "../wp.delloro/#{page}"
 #   FileUtils.mkdir_p(File.dirname(new_path))
 #   File.open(new_path, 'w') do |output|
@@ -59,5 +85,5 @@ end
 #       html << "</html>"
 #       output.puts tidy_html(html)
 #     end
-#   end
-# end
+#   end#
+#end
