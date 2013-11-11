@@ -19,14 +19,14 @@ class Scrapper
   end
 
   def self.sanitize_html(html)
-    Sanitize.clean(html, Sanitize::Config::RELAXED.merge(:remove_contents => true))
+    Sanitize.clean(html, Sanitize::Config::RESTRICTED)
   end
 
   def self.tidy_html(html)
     TidyFFI::Tidy.with_options(
       :indent           => 'yes',
       :tidy_mark        => false,
-      :char_encoding    => 'utf8',
+      # :char_encoding    => 'utf8',
       :doctype          => 'omit',
       :bare             => true,
       :clean            => true,
@@ -39,51 +39,61 @@ class Scrapper
     tidy_html sanitize_html(html)
   end
 
-  def self.return_inconsistent_pages
-    Dir.chdir('www.broadviewproduct.com')
-    pages = Dir['**/*.htm']
-    results = []
-    inconsistent_pages = []
+  # def self.test
+  #   file = 'www.broadviewproduct.com/ca'
+    
+  # end
 
-    for page in pages
-      data = parse_page(page)
-      result = {url: data[:url], content?: !data[:content].nil?}
-      results << result
-    end
+  # def self.return_inconsistent_pages
+  #   Dir.chdir('www.broadviewproduct.com')
+  #   pages = Dir['**/*.htm']
+  #   results = []
+  #   inconsistent_pages = []
 
-    for result in results
-      unless result[:content?]
-        inconsistent_pages << result[:url]
-      end
-    end
-    inconsistent_pages
-  end
+  #   for page in pages
+  #     data = parse_page(page)
+  #     result = {url: data[:url], content?: !data[:content].nil?}
+  #     results << result
+  #   end
+
+  #   for result in results
+  #     unless result[:content?]
+  #       inconsistent_pages << result[:url]
+  #     end
+  #   end
+  #   inconsistent_pages
+  # end
 
 end
 
 
-#Dir.chdir('www.broadviewproduct.com')
-#puts pages = Dir['**/*.htm*']
+Dir.chdir('www.broadviewproduct.com')
+puts pages = Dir['**/*.htm*']
 
-#pages.each do |page|
- #   data = parse_page(page)
-#    puts data[:content]
-#  end
-  # puts Scrapper
-#   new_path = "../wp.delloro/#{page}"
-#   FileUtils.mkdir_p(File.dirname(new_path))
-#   File.open(new_path, 'w') do |output|
-#     puts page
-#     data = parse_page(page)
-#     "".tap do |html|
-#       html << "<html><head>"
-#       html << "<title>#{data[:title]}</title>"
-#       html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
-#       html << "<meta name='description' content='#{data[:meta_description]}'>"
-#       html << "</head>"
-#       html << "<body>#{sanitize_html(data[:content])}</body>"
-#       html << "</html>"
-#       output.puts tidy_html(html)
-#     end
-#   end#
-#end
+failed = []
+
+pages.each do |page|
+  new_path = "../scraped_site/#{page}"
+  FileUtils.mkdir_p(File.dirname(new_path))
+  File.open(new_path, 'w') do |output|
+    begin
+     puts page
+      data = Scrapper.parse_page(page)
+      "".tap do |html|
+        html << "<html><head>"
+        html << "<title>#{data[:title]}</title>"
+        html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
+        html << "<meta name='description' content='#{data[:meta_description]}'>"
+        html << "</head>"
+        html << "<body>#{Scrapper.sanitize_html(data[:content])}</body>"
+        html << "</html>"
+        output.puts Scrapper.tidy_html(html)
+      end
+    rescue Encoding::CompatibilityError
+      failed << page
+    end
+  end
+end
+
+puts "character encoding error on the following:"
+failed.each {|page| puts page}
