@@ -37,31 +37,6 @@ class Scrapper
     tidy_html sanitize_html(html)
   end
 
-  # def self.test
-  #   file = 'www.broadviewproduct.com/ca'
-    
-  # end
-
-  # def self.return_inconsistent_pages
-  #   Dir.chdir('www.broadviewproduct.com')
-  #   pages = Dir['**/*.htm']
-  #   results = []
-  #   inconsistent_pages = []
-
-  #   for page in pages
-  #     data = parse_page(page)
-  #     result = {url: data[:url], content?: !data[:content].nil?}
-  #     results << result
-  #   end
-
-  #   for result in results
-  #     unless result[:content?]
-  #       inconsistent_pages << result[:url]
-  #     end
-  #   end
-  #   inconsistent_pages
-  # end
-
 end
 
 
