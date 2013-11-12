@@ -30,7 +30,7 @@ class DirectoryScraper
     @pages.each do |page|
       filename = page[:filename]
       path = "#{dir}/#{filename}"
-      result = catch(:failed) { page[:filter].output_html(path) }
+      result = page[:filter].output_html(path)
       if result == failed
         failed << filename
       else
