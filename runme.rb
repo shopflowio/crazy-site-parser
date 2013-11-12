@@ -1,4 +1,4 @@
-require './dirscanner'
+require './dirscraper'
 SRC_DIR = 'bpd'
 OUT_DIR = 'bpd_scraped'
 
