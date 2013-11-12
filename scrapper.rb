@@ -58,7 +58,8 @@ pages.each do |page|
         html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
         html << "<meta name='description' content='#{data[:meta_description]}'>"
         html << "</head>"
-        html << "<body>#{Scrapper.sanitize_html(data[:content])}</body>"
+        html << "<body><a href='../www.broadviewproduct.com/#{page}'>#{page}</a><br />
+                #{Scrapper.sanitize_html(data[:content])}</body>"
         html << "</html>"
         output.puts Scrapper.tidy_html(html)
       end
