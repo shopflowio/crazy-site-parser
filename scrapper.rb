@@ -24,7 +24,7 @@ class Scrapper
     TidyFFI::Tidy.with_options(
       :indent           => 'yes',
       :tidy_mark        => false,
-      # :char_encoding    => 'utf8',
+      :char_encoding    => 'utf8',
       :doctype          => 'omit',
       :bare             => true,
       :clean            => true,
