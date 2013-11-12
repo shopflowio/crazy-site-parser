@@ -25,21 +25,11 @@ class DirectoryScraper
     FileUtils.remove_dir(dir, force: true) if Dir.exists? dir
     dir = File.realdirpath dir
     FileUtils.mkdir_p dir
-    failed = []
 
     @pages.each do |page|
       filename = page[:filename]
       path = "#{dir}/#{filename}"
-      result = page[:filter].output_html(path)
-      if result == failed
-        failed << filename
-      else
-        puts result
-      end
-      unless failed.empty?
-        puts "character encoding error on the following:"
-        failed.each { |failure| puts failure }
-      end
+      page[:filter].output_html(path)
     end
   end
 

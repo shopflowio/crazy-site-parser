@@ -47,7 +47,7 @@ class PageFilter
 	  html << "</html>"
 	  file.puts html
 	end
-	return path
+	puts path
       rescue Encoding::CompatibilityError
         return nil
       end
