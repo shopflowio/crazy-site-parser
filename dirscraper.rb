@@ -1,4 +1,3 @@
-#rvm 1.8.7
 class DirectoryScraper
 
   require './pagefilter'

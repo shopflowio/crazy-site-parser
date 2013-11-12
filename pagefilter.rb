@@ -2,9 +2,9 @@ class PageFilter
   require 'nokogiri'
   attr_accessor :doc, :page, :title, :meta_description, :content
 
-  def initialize(page)
-    @page = page
-    @doc  = Nokogiri::HTML(File.open @page)
+  def initialize(path)
+    @path = path 
+    @doc  = Nokogiri::HTML(File.open @path)
     define_ng_selectors
   end
 
@@ -16,7 +16,7 @@ class PageFilter
 
   def parse_page
     {}.tap do |data|
-      data[:url]              = "http://www.delloro.com/#{@page}"
+      data[:url]              = "http://www.delloro.com/#{File.basename(@path)}"
       data[:title]            = @title.text if @title
       data[:meta_description] = @meta_description['content'] if @meta_description
       data[:content]          = parse_content(@content) if @content
