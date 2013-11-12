@@ -1,8 +1,6 @@
 #rvm 1.8.7
 class Scrapper
 
-  require 'rubygems'
-  require 'nokogiri'
   require 'awesome_print'
   require 'fileutils'
   require 'sanitize'
@@ -19,7 +17,7 @@ class Scrapper
   end
 
   def self.sanitize_html(html)
-    Sanitize.clean(html, Sanitize::Config::RESTRICTED, elements: ['img'])
+    Sanitize.clean(html, Sanitize::Config::RESTRICTED)
   end
 
   def self.tidy_html(html)
