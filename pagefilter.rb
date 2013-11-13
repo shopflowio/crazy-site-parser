@@ -1,5 +1,6 @@
 class PageFilter
   require 'nokogiri'
+  require 'fileutils'
   attr_accessor :doc, :page, :title, :meta_description, :content
 
   def initialize(path)
@@ -32,9 +33,40 @@ class PageFilter
       end
     end
   end
+ 
+  def make_paths_absolute(content, root_path)
+    "".tap do |data|
+      content_ng = Nokogiri::HTML.parse(content)
+      content_ng.css('img').each do |img|
+        img['src'] = root_path + '/' + img['src']
+      end
+      data << content_ng.inner_html
+    end
+  end
+
+  def save_images(content, root_path)
+    if content and content.at_css('img')
+      content.css('img').each do |img|
+        relative_path = img['src']
+        file_to_open  = File.dirname(@path) + '/' + relative_path
+        filename      = File.basename(file_to_open)
+        file_to_save  = root_path + '/' + relative_path
+
+        FileUtils.mkdir_p File.dirname(file_to_save)
+        begin
+	  FileUtils.copy_file(file_to_open, file_to_save, true)
+        rescue Errno::ENOENT
+        end
+      end
+    end
+  end
 
   def output_html(path)
     data = parse_page
+    out_dir = File.dirname(path)
+    save_images(@content, out_dir)
+    content_with_abs_paths = make_paths_absolute(data[:content], out_dir) if data[:content]
+
     File.open(path, 'w') do |file|
       begin
 	"".tap do |html|
@@ -43,7 +75,7 @@ class PageFilter
 	  html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
 	  html << "<meta name='description' content='#{data[:meta_description]}'>"
 	  html << "</head>"
-	  html << "<body>#{data[:content]}</body>"
+	  html << "<body>#{content_with_abs_paths}</body>"
 	  html << "</html>"
 	  file.puts html
 	end
