@@ -21,8 +21,8 @@ class DirectoryScraper
   end
 
   def build_site_from_content(dir)
-    FileUtils.remove_dir(dir, force: true) if Dir.exists? dir
     dir = File.realdirpath dir
+    FileUtils.remove_dir(dir, force: true) if Dir.exists? dir
     FileUtils.mkdir_p dir
 
     @pages.each do |page|
