@@ -1,7 +1,7 @@
 class PageFilter
   require 'nokogiri'
   require 'fileutils'
-  attr_accessor :doc, :page, :title, :meta_description, :content
+  attr_accessor :doc, :path, :title, :meta_description, :content
 
 ## initialization logic
   def initialize(path)
