@@ -3,6 +3,7 @@ class PageFilter
   require 'fileutils'
   attr_accessor :doc, :page, :title, :meta_description, :content
 
+## initialization logic
   def initialize(path)
     @path = path 
     @doc  = Nokogiri::HTML(File.open @path)
@@ -14,7 +15,9 @@ class PageFilter
     @meta_description = @doc.at_css('meta[name="DESCRIPTION"]')
     @content          = @doc.at_css('table[width="622"]')
   end
+#####
 
+## parsing logic
   def parse_page
     {}.tap do |data|
       data[:url]              = "http://www.delloro.com/#{File.basename(@path)}"
@@ -33,15 +36,30 @@ class PageFilter
       end
     end
   end
+#####
  
-  def make_paths_absolute(content, root_path)
-    "".tap do |data|
-      content_ng = Nokogiri::HTML.parse(content)
-      content_ng.css('img').each do |img|
-        img['src'] = root_path + '/' + img['src']
+## output logic
+  def output_html(path)
+    data = parse_page
+    out_dir = File.dirname(path)
+    content = data[:content]
+
+    save_images(@content, out_dir)
+    content = tidy_for_output(content, out_dir) if content
+
+    File.open(path, 'w') do |file|
+      "".tap do |html|
+	html << "<html><head>"
+	html << "<title>#{data[:title]}</title>"
+	html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
+	html << "<meta name='description' content='#{data[:meta_description]}'>"
+	html << "</head>"
+	html << "<body>#{content}</body>"
+	html << "</html>"
+	file.puts html
       end
-      data << content_ng.inner_html
     end
+    puts path
   end
 
   def save_images(content, root_path)
@@ -59,30 +77,29 @@ class PageFilter
       end
     end
   end
+#####
 
-  def output_html(path)
-    data = parse_page
-    out_dir = File.dirname(path)
-    save_images(@content, out_dir)
-    content_with_abs_paths = make_paths_absolute(data[:content], out_dir) if data[:content]
+## tidy for output logic
+  def tidy_for_output(html, root_path)
+    html = make_paths_absolute(html, root_path)
+    html = strip_unwanted_characters(html)
+    html
+  end
 
-    File.open(path, 'w') do |file|
-      begin
-	"".tap do |html|
-	  html << "<html><head>"
-	  html << "<title>#{data[:title]}</title>"
-	  html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
-	  html << "<meta name='description' content='#{data[:meta_description]}'>"
-	  html << "</head>"
-	  html << "<body>#{content_with_abs_paths}</body>"
-	  html << "</html>"
-	  file.puts html
-	end
-	puts path
-      rescue Encoding::CompatibilityError
-        return nil
+  def make_paths_absolute(html, root_path)
+    "".tap do |data|
+      content_ng = Nokogiri::HTML.parse(html)
+      content_ng.css('img').each do |img|
+        img['src'] = root_path + '/' + img['src']
       end
+      data << content_ng.inner_html
     end
+  end
+
+  def strip_unwanted_characters(html)
+    html = html.encode('Windows-1252') # with utf-8 we get Â's
+    html.tr!("\n", '')
+    html.gsub!(/\ +/, ' ')
   end
 
 end
