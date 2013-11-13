@@ -81,6 +81,7 @@ class PageFilter
 
 ## tidy for output logic
   def tidy_for_output(html, root_path)
+    html = html.encode('Windows-1252') # with utf-8 we get Â's
     html = make_paths_absolute(html, root_path)
     html = strip_unwanted_characters(html)
     html
@@ -97,7 +98,6 @@ class PageFilter
   end
 
   def strip_unwanted_characters(html)
-    html = html.encode('Windows-1252') # with utf-8 we get Â's
     html.tr!("\n", '')
     html.gsub!(/\ +/, ' ')
   end
