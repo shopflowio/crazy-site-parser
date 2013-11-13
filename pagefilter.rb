@@ -49,7 +49,6 @@ class PageFilter
       content.css('img').each do |img|
         relative_path = img['src']
         file_to_open  = File.dirname(@path) + '/' + relative_path
-        filename      = File.basename(file_to_open)
         file_to_save  = root_path + '/' + relative_path
 
         FileUtils.mkdir_p File.dirname(file_to_save)
