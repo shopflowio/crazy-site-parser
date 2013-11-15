@@ -1,4 +1,3 @@
-require 'debugger'
 class Modeller
   require './config/global'
   require 'active_record'
