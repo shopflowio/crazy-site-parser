@@ -1,7 +1,9 @@
 source "https://rubygems.org"
 
+gem 'activerecord'
+gem 'sqlite3'
+
 gem 'nokogiri'
-gem 'awesome_print'
-gem 'sanitize'
-gem 'tidy_ffi'
+
 gem 'pry'
+gem 'debugger'
