@@ -11,7 +11,6 @@ class Modeller
 #  The job right now is just to interact with Comfy Mexican Sofa, but I think if written the right way
 #  it can work with Wordpress too, and other CMS's.
 
-#  To start with I'm focusing on sqlite, but I expect to be able to adapt this to other SQL's pretty easily.
 
   attr_accessor :connection
 
