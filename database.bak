@@ -1,4 +1,0 @@
-adapter:  sqlite3
-database: /home/jim/src/comfy_sofa/db/development.sqlite3
-pool:     5
-timeout:  5000
