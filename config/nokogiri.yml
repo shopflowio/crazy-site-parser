@@ -1,0 +1,8 @@
+title_selector:            at_css('title')
+meta_description_selector: at_css('meta[name="DESCRIPTION"]')
+content_selector:          at_css('table[width="622"]')
+
+seperater_string:          <br /><br />
+element_selectors:
+  - css('p')
+  - css('img')

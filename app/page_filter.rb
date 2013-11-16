@@ -1,19 +1,24 @@
 class PageFilter
   require 'nokogiri'
-  require 'fileutils'
   attr_accessor :doc, :path, :title, :meta_description, :content
 
 ## initialization logic
-  def initialize(path)
-    @path = path 
+  def initialize(options = {})
+    unless options[:path] and options[:config]
+      raise "This method requires a :path and :config"
+    end
+    @path   = options[:path]
+    @config = options[:config]
     @doc  = Nokogiri::HTML(File.open @path)
     define_ng_selectors
   end
 
   def define_ng_selectors
-    @title            = @doc.at_css('title')
-    @meta_description = @doc.at_css('meta[name="DESCRIPTION"]')
-    @content          = @doc.at_css('table[width="622"]')
+    @doc.tap do
+      @title            = eval @config.title_selector
+      @meta_description = eval @config.meta_description_selector
+      @content          = eval @config.content_selector
+    end
   end
 #####
 
@@ -23,21 +28,24 @@ class PageFilter
       data[:url]              = "http://www.delloro.com/#{File.basename(@path)}"
       data[:title]            = @title.text if @title
       data[:meta_description] = @meta_description['content'] if @meta_description
-      data[:content]          = parse_content(@content) if @content
+      data[:content]          = parse_content if @content
     end
   end
 
-  def parse_content(content)
-    all_the_ps = content.css('p')
-    "".tap do |data|
-      all_the_ps.each do |p|
-        data << p.inner_html
-        data << '<br /><br />'
+  def parse_content
+    data = ''
+    @content.tap do
+      for es in @config.element_selectors
+        data << eval es.inner_html
+        data << @config.seperater_string
       end
     end
   end
-#####
- 
+
+
+
+
+
 ## output logic
   def output_html(path)
     data = parse_page

@@ -42,7 +42,7 @@ namespace :internal do
 
   task :confirm_db do
     system "clear"
-    yml = YAML.load_file(Global::DB_YML)
+    yml = YAML.load_file(Global::DB_YML) # rake task shouldn't have logic like this, will move
     puts "\nCurrent Database Configuration:"
     puts ""
     yml.each_key do |key|
