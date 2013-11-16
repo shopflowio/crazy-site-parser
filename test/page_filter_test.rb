@@ -6,7 +6,7 @@ class PageFilterTest < MiniTest::Unit::TestCase
 
   def setup
     @config = Configuration.new('test/config/nokogiri.yml')
-    @path   = 'test/bpd/aboutus.htm'
+    @path   = 'test/bpd/Flute.html'
     @pf = PageFilter.new(path: @path, config: @config)
   end
 
@@ -23,6 +23,10 @@ class PageFilterTest < MiniTest::Unit::TestCase
     regexp = Regexp.new(@config.seperator_string)
 
     assert regexp.match @pf.parse_content
+  end
+
+  def test_images
+    assert @pf.images.count == 4
   end
 
 end

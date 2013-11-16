@@ -93,7 +93,7 @@ class PageFilter
     end
     [].tap do |images|
       @content.css('img').each do |img|
-        images << img['href']
+        images << img['src']
       end
     end
   end
