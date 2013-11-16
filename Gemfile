@@ -5,5 +5,6 @@ gem 'sqlite3'
 
 gem 'nokogiri'
 
+gem 'activesupport'
 gem 'pry'
 gem 'debugger'

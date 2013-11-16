@@ -49,6 +49,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  activesupport
   debugger
   nokogiri
   pry
