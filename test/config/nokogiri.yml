@@ -3,8 +3,8 @@ meta_description_selector: at_css('meta[name="DESCRIPTION"]')['content'] if at_c
 content_selector:          at_css('table[width="622"]')
 
 element_selectors:
-  - css('p').inner_html
-  - css('img').inner_html
+  - css('p').to_html
+  - css('img').to_html
 
 seperator_string:          <br /><br />
 
