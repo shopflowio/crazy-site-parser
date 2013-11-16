@@ -26,10 +26,14 @@ class PageFilter
 
 ## parsing logic
   def parse_page
+    # as of now this assumes that selectors will yield Nokogiri elements
+    # but if we're really allowing the freedom of ruby code in the yml
+    # file, then this isn't a fair assumption to make.
+    # needs fix
     {}.tap do |data|
-      data[:url]              = "http://www.delloro.com/#{File.basename(@path)}"
+      data[:filename]         = File.basename(@path)
       data[:title]            = @title.text if @title
-      data[:meta_description] = @meta_description['content'] if @meta_description
+      data[:meta_description] = @meta_desc['content'] if @meta_desc
       data[:content]          = parse_content if @content
     end
   end
