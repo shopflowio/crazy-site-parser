@@ -27,9 +27,9 @@ class PageFilter
 ## parsing logic
   def parse_page
     {}.tap do |data|
-      data[:title]            = @title
-      data[:meta_description] = @meta_desc
-      data[:content]          = parse_content if @content
+      data[:title]       = @title
+      data[:meta_desc]   = @meta_desc
+      data[:content]     = parse_content if @content
     end
   end
 
@@ -95,6 +95,18 @@ class PageFilter
       @content.css('img').each do |img|
         images << img['src']
       end
+    end
+  end
+
+  def to_html
+    data = parse_page
+    "".tap do |html|
+      html << "<html><head>"
+      html << "<title>#{data[:title]}</title>"
+      html << "<meta name='description' content='#{data[:meta_desc]}'>"
+      html << "</head>"
+      html << "<body>#{data[:content]}</body>"
+      html << "</html>"
     end
   end
 

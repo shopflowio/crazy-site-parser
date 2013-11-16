@@ -20,6 +20,12 @@ namespace :scrape do
     # do it
   end
 
+  # proof of concept
+  # so we can at least get back to a working scraper
+  task :to_html do
+
+  end
+
 end
 
 namespace :config do
