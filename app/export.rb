@@ -20,9 +20,9 @@ class Export
 #  if hooking up a new CMS is just a matter of writing a new configuration,
 #  I'll consider this lofty goal a success.
 
-  def self.html_to_file(html, path)
+  def self.to_file(data, path)
     File.open(path, 'w') do |f|
-      f.write html
+      f.write data
     end
   end
 

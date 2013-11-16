@@ -11,3 +11,10 @@ seperator_string:          <br /><br />
 elements_to_seperate:
   - p
   - img
+
+encode_html_as:            Windows-1252
+condense_spaces:           true
+
+characters_to_strip:
+  - \n
+

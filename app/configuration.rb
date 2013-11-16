@@ -13,7 +13,8 @@ class Configuration
 
 #  The one exception is the seperater string, which will always remain a string.
 
-  attr_accessor :selectors, :element_selectors, :seperator_string, :elements_to_seperate
+  attr_accessor :selectors, :element_selectors, :seperator_string, :elements_to_seperate,
+                :encoding, :condense_spaces, :characters_to_strip
 
   def initialize(yml_path)
     raise "Cannot find #{yml_path}" unless File.exists? yml_path
@@ -26,6 +27,9 @@ class Configuration
     @element_selectors    =                   yml['element_selectors']
     @seperator_string     =                   yml['seperator_string']
     @elements_to_seperate =                   yml['elements_to_seperate']
+    @encoding             =                   yml['encode_html_as']
+    @condense_spaces      =                   yml['condense_spaces']
+    @characters_to_strip  =                   yml['characters_to_strip']
   end
 
 end
