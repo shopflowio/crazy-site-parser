@@ -1,6 +1,6 @@
-require 'active_support'
+require 'minitest/autorun'
 
-class ModellerTest < ActiveSupport::TestCase
+class ModellerTest < Minitest::Test
   require './app/modeller'
 
   test "initialize with sqlite3" do
@@ -11,7 +11,7 @@ class ModellerTest < ActiveSupport::TestCase
                       pool:     5,
                       timeout:  5000      )
 
-    !assert_raise ActiveRecord::ConnectionNotEstablished do
+    !assert_raises ActiveRecord::ConnectionNotEstablished do
       m.connection
     end
   end
