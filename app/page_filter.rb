@@ -1,7 +1,7 @@
 require 'debugger'
 class PageFilter
   require 'nokogiri'
-  attr_accessor :doc, :path, :title, :meta_description, :content
+  attr_accessor :doc, :path, :title, :meta_desc, :content
 
 ## initialization logic
   def initialize(options = {})
@@ -18,8 +18,8 @@ class PageFilter
   def define_ng_selectors
     s = @config.selectors
     @title     = @doc.instance_eval { eval s[:title_selector] }
-    @meta_desc = @doc.instance_eval { eval s[:title_selector] }
-    @content   = @doc.instance_eval { eval s[:title_selector] }
+    @meta_desc = @doc.instance_eval { eval s[:meta_description_selector] }
+    @content   = @doc.instance_eval { eval s[:content_selector] }
   end
 
 
@@ -34,14 +34,22 @@ class PageFilter
     end
   end
 
-#  def parse_content
-#    
-#      for es in @config.element_selectors
-#        data << eval es.inner_html # this is actually wrong. needs fix
-#        data << @config.seperater_string
-#      end
-#    end
-#  end
+  def parse_content
+    e_s = @config.element_selectors
+    s_s = @config.seperator_string
+
+    "".tap do |data|
+      @content.instance_eval do
+        e_s.each do |selector|
+          elements = eval selector
+          elements.each do |e|
+            data << e.inner_html
+            data << s_s
+          end
+        end
+      end
+    end
+  end
 
 
 
