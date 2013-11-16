@@ -9,10 +9,17 @@ class PageFilterTest < MiniTest::Unit::TestCase
     @path   = 'test/bpd/aboutus.htm'
   end
 
-  def test_initialization
+  def test_initialize
     pf = PageFilter.new(path: @path, config: @config)
 
     assert pf.content.instance_of? Nokogiri::XML::Element
+  end
+
+  def test_parse_content
+    pf = PageFilter.new(path: @path, config: @config)
+    
+    assert pf.parse_content.instance_of? String
+    assert !pf.parse_content.empty?
   end
 
 end

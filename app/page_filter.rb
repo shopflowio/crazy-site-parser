@@ -13,14 +13,13 @@ class PageFilter
     @doc     = Nokogiri::HTML.parse(File.open @path)
 
     define_ng_selectors
-    @content = @doc.content_s
   end
 
   def define_ng_selectors
     s = @config.selectors
-    @doc.define_singleton_method(:title_s)     { eval s[:title_selector] }
-    @doc.define_singleton_method(:meta_desc_s) { eval s[:meta_description_selector] }
-    @doc.define_singleton_method(:content_s)   { eval s[:content_selector] }
+    @title     = @doc.instance_eval { eval s[:title_selector] }
+    @meta_desc = @doc.instance_eval { eval s[:title_selector] }
+    @content   = @doc.instance_eval { eval s[:title_selector] }
   end
 
 
@@ -36,8 +35,7 @@ class PageFilter
   end
 
 #  def parse_content
-#    data = ''
-#    @content.tap do
+#    
 #      for es in @config.element_selectors
 #        data << eval es.inner_html # this is actually wrong. needs fix
 #        data << @config.seperater_string
