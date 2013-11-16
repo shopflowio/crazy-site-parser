@@ -8,7 +8,7 @@ class Configuration
 #  It also defines element selectors and a seperater string to seperate them with.
 
 #  Each PageFilter gets initialized with a Configuration object (probably the same one for all of them).
-#  Every selector will get evaluated as a statement within a Nokogiri::HTML instance.
+#  Every selector will get evaluated as a statement within an instance of Nokogiri object.
 #  So just about every value in the yaml file gets evaluated as ruby code, and we can use Nokogiri methods.
 
 #  The one exception is the seperater string, which will always remain a string.
