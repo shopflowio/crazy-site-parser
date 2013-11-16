@@ -13,18 +13,18 @@ class Configuration
 
 #  The one exception is the seperater string, which will always remain a string.
 
-  attr_accessor :selectors, :element_selecters, :seperater_string
+  attr_accessor :selectors, :element_selectors, :seperater_string
 
   def initialize(yml_path)
     raise "Cannot find #{yml_path}" unless File.exists? yml_path
     yml = YAML.load_file(yml_path)
 
-    @selectors = { title_selector:            yml[:title],
-                   meta_description_selector: yml[:meta_description],
-                   content_selector:          yml[:content]        }
+    @selectors = { title_selector:            yml['title_selector'],
+                   meta_description_selector: yml['meta_description_selector'],
+                   content_selector:          yml['content_selector']        }
 
-    @element_selectors =                      yml[:element_selecters]
-    @seperater_string  =                      yml[:seperater_string]
+    @element_selectors =                      yml['element_selectors']
+    @seperater_string  =                      yml['seperater_string']
   end
 
 end

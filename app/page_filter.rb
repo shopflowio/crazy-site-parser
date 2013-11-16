@@ -5,7 +5,9 @@ class PageFilter
 ## initialization logic
   def initialize(options = {})
     unless options[:path] and options[:config]
-      raise "This method requires a :path and :config"
+      raise "This method requires a :path and :config\n
+             path:   #{options[:path]}\n
+             config: #{options[:config]}"
     end
     @path   = options[:path]
     @config = options[:config]
@@ -32,15 +34,15 @@ class PageFilter
     end
   end
 
-  def parse_content
-    data = ''
-    @content.tap do
-      for es in @config.element_selectors
-        data << eval es.inner_html # this is actually wrong. needs fix
-        data << @config.seperater_string
-      end
-    end
-  end
+#  def parse_content
+#    data = ''
+#    @content.tap do
+#      for es in @config.element_selectors
+#        data << eval es.inner_html # this is actually wrong. needs fix
+#        data << @config.seperater_string
+#      end
+#    end
+#  end
 
 
 
