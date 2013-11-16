@@ -26,33 +26,44 @@ class PageFilter
 
 ## parsing logic
   def parse_page
-    # as of now this assumes that selectors will yield Nokogiri elements
-    # but if we're really allowing the freedom of ruby code in the yml
-    # file, then this isn't a fair assumption to make.
-    # needs fix
     {}.tap do |data|
-      data[:filename]         = File.basename(@path)
-      data[:title]            = @title.text if @title
-      data[:meta_description] = @meta_desc['content'] if @meta_desc
+      data[:title]            = @title
+      data[:meta_description] = @meta_desc
       data[:content]          = parse_content if @content
     end
   end
 
-  def parse_content
-    e_s = @config.element_selectors
-    s_s = @config.seperator_string
 
-    "".tap do |data|
+  def parse_content
+    # evaluate each element selector
+    # append the result to a string
+    e_s = @config.element_selectors
+
+    parsed_elements = "".tap do |data|
       @content.instance_eval do
         e_s.each do |selector|
-          elements = eval selector
-          elements.each do |e|
-            data << e.inner_html
-            data << s_s
-          end
+          data << eval(selector)
         end
       end
     end
+    seperate_elements(parsed_elements)
+  end
+
+
+  def seperate_elements(parsed_elements)
+    # take a string of html and parse with Nokogiri
+    # seperate each element and append it to an array
+    # concat the elements with the seperator string
+    elements = []
+    e_t_s    = @config.elements_to_seperate
+    s_s      = @config.seperator_string
+    ng_doc = Nokogiri::HTML.parse(parsed_elements)
+
+    e_t_s.each do |element|
+      ng_doc.css(element).each { |e| elements << e.inner_html }
+    end
+
+    elements * s_s
   end
 
 
