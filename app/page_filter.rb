@@ -6,9 +6,7 @@ class PageFilter
 ## initialization logic
   def initialize(options = {})
     unless options[:path] and options[:config]
-      raise "This method requires a :path and :config\n
-             path:   #{options[:path]}\n
-             config: #{options[:config]}"
+      raise "This method requires a :path and :config"
     end
     @path    = options[:path]
     @config  = options[:config]
