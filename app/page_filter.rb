@@ -71,44 +71,44 @@ class PageFilter
 
 
 ## output logic
-  def output_html(path)
-    data = parse_page
-    out_dir = File.dirname(path)
-    content = data[:content]
+#  def output_html(path)
+#    data = parse_page
+#    out_dir = File.dirname(path)
+#    content = data[:content]
+#
+#    save_images(@content, out_dir)
+#    content = tidy_for_output(content, out_dir) if content
+#
+#    File.open(path, 'w') do |file|
+#      "".tap do |html|
+#	html << "<html><head>"
+#	html << "<title>#{data[:title]}</title>"
+#	html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
+#	html << "<meta name='description' content='#{data[:meta_description]}'>"
+#	html << "</head>"
+#	html << "<body>#{content}</body>"
+#	html << "</html>"
+#	file.puts html
+#      end
+#    end
+#    puts path
+#  end
 
-    save_images(@content, out_dir)
-    content = tidy_for_output(content, out_dir) if content
-
-    File.open(path, 'w') do |file|
-      "".tap do |html|
-	html << "<html><head>"
-	html << "<title>#{data[:title]}</title>"
-	html << "<meta name='generator' content='UpTrending HTML scrape and tidy ruby script!'"
-	html << "<meta name='description' content='#{data[:meta_description]}'>"
-	html << "</head>"
-	html << "<body>#{content}</body>"
-	html << "</html>"
-	file.puts html
-      end
-    end
-    puts path
-  end
-
-  def save_images(content, root_path)
-    if content and content.at_css('img')
-      content.css('img').each do |img|
-        relative_path = img['src']
-        file_to_open  = File.dirname(@path) + '/' + relative_path
-        file_to_save  = root_path + '/' + relative_path
-
-        FileUtils.mkdir_p File.dirname(file_to_save)
-        begin
-	  FileUtils.copy_file(file_to_open, file_to_save, true)
-        rescue Errno::ENOENT
-        end
-      end
-    end
-  end
+#  def save_images(content, root_path)
+#    if content and content.at_css('img')
+#      content.css('img').each do |img|
+#        relative_path = img['src']
+#        file_to_open  = File.dirname(@path) + '/' + relative_path
+#        file_to_save  = root_path + '/' + relative_path
+#
+#        FileUtils.mkdir_p File.dirname(file_to_save)
+#        begin
+#	  FileUtils.copy_file(file_to_open, file_to_save, true)
+#        rescue Errno::ENOENT
+#        end
+#      end
+#    end
+#  end
 #####
 
 ## tidy for output logic
