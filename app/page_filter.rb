@@ -68,7 +68,7 @@ class PageFilter
     ng_doc = Nokogiri::HTML.parse(parsed_elements)
 
     e_t_s.each do |element|
-      ng_doc.css(element).each { |e| elements << e.inner_html }
+      ng_doc.css(element).each { |e| elements << e.to_html }
     end
 
     elements * s_s
