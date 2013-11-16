@@ -12,7 +12,7 @@ class PageFilterTest < MiniTest::Unit::TestCase
   def test_initialize
     pf = PageFilter.new(path: @path, config: @config)
 
-    assert pf.content.instance_of? Nokogiri::XML::Element
+    assert !pf.content.nil?
   end
 
   def test_parse_content
