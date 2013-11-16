@@ -2,6 +2,7 @@ require './config/global'
 require './app/generate'
 require 'yaml'
 
+
 namespace :scrape do
 
   task :to_comfy do

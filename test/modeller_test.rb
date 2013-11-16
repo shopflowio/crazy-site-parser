@@ -1,9 +1,10 @@
+require 'active_record'
 require 'minitest/autorun'
 
-class ModellerTest < Minitest::Test
+class ModellerTest < MiniTest::Unit::TestCase
   require './app/modeller'
 
-  test "initialize with sqlite3" do
+  def test_initialize_with_sqlite3
     database = "./test/db/comfy_db.sqlite3"
 
     m = Modeller.new( adapter:  'sqlite3',
@@ -11,9 +12,7 @@ class ModellerTest < Minitest::Test
                       pool:     5,
                       timeout:  5000      )
 
-    !assert_raises ActiveRecord::ConnectionNotEstablished do
-      m.connection
-    end
+    assert !m.tables.empty?
   end
 
 end
