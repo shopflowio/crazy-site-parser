@@ -10,15 +10,9 @@ class PageFilterTest < MiniTest::Unit::TestCase
   end
 
   def test_initialization
-    page_filter = PageFilter.new(path: @path, config: @config)
+    pf = PageFilter.new(path: @path, config: @config)
 
-    page_filter.tap do
-      assert config.instance_of? Configuration
-
-      [doc, title, meta_description, content].each do |ivar|
-        assert ivar.instance_of? Nokogiri::HTML
-      end
-    end
+    assert pf.content.instance_of? Nokogiri::XML::Element
   end
 
 end

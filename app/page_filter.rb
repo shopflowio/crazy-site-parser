@@ -1,3 +1,4 @@
+require 'debugger'
 class PageFilter
   require 'nokogiri'
   attr_accessor :doc, :path, :title, :meta_description, :content
@@ -9,20 +10,22 @@ class PageFilter
              path:   #{options[:path]}\n
              config: #{options[:config]}"
     end
-    @path   = options[:path]
-    @config = options[:config]
-    @doc  = Nokogiri::HTML(File.open @path)
+    @path    = options[:path]
+    @config  = options[:config]
+    @doc     = Nokogiri::HTML.parse(File.open @path)
+
     define_ng_selectors
+    @content = @doc.content_s
   end
 
   def define_ng_selectors
-    @doc.tap do
-      @title            = eval @config.title_selector
-      @meta_description = eval @config.meta_description_selector
-      @content          = eval @config.content_selector
-    end
+    s = @config.selectors
+    @doc.define_singleton_method(:title_s)     { eval s[:title_selector] }
+    @doc.define_singleton_method(:meta_desc_s) { eval s[:meta_description_selector] }
+    @doc.define_singleton_method(:content_s)   { eval s[:content_selector] }
   end
-#####
+
+
 
 ## parsing logic
   def parse_page
