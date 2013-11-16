@@ -36,7 +36,7 @@ class PageFilter
     data = ''
     @content.tap do
       for es in @config.element_selectors
-        data << eval es.inner_html
+        data << eval es.inner_html # this is actually wrong. needs fix
         data << @config.seperater_string
       end
     end
