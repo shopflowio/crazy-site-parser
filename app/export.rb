@@ -1,4 +1,5 @@
 class Export
+  require 'fileutils'
 #-- Summary
 
 #  This is a class that handles exporting to different formats. I still need to
@@ -21,6 +22,8 @@ class Export
 #  I'll consider this lofty goal a success.
 
   def self.to_file(data, path)
+    FileUtils.mkdir_p File.dirname(path)
+
     File.open(path, 'w') do |f|
       f.write data
     end

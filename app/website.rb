@@ -1,4 +1,5 @@
 class Website
+  require './app/page_filter'
   require './app/export'
 #-- Summary
 
@@ -30,7 +31,7 @@ class Website
       @page_paths.each do |path|
         data << { filename:       File.basename(path), 
                   relative_path:  path.sub(@root_path, ''),
-                  filter:         PageFilter.new(path, @config) }
+                  filter:         PageFilter.new(path: path, config: @config) }
       end
     end
   end
@@ -42,7 +43,7 @@ class Website
 
     pages = get_page_filters
     pages.each do |page|
-      out_path = "#{path}/#{page[:relative_path]}"
+      out_path = path + page[:relative_path]
       Export.to_file(page[:filter].to_html, out_path)
     end
   end
