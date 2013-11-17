@@ -115,9 +115,7 @@ class PageFilter
   end
 
   def relativize_path(path)
-    possible_root = /http.+\.(com|org|net)/
     path.sub!(@root_path, '')
-    path.sub!(possible_root, '')
     path = '/' + path unless path[0] == '/'
     path
   end
