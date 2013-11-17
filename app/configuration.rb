@@ -30,6 +30,11 @@ class Configuration
     @encoding             =                   yml['encode_html_as']
     @condense_spaces      =                   yml['condense_spaces']
     @characters_to_strip  =                   yml['characters_to_strip']
+
+    unless @characters_to_strip.nil?
+      @characters_to_strip.map! { |a| a = "\n" if a == "\\n" }
+    end
+
   end
 
 end
