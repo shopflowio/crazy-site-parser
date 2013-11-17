@@ -3,12 +3,13 @@ require 'minitest/autorun'
 class ModellerTest < MiniTest::Unit::TestCase
   require './app/modeller'
 
-  @sqlite3_db = "./test/db/comfy_db.sqlite3"
-
-  @db_params  = { adapter:  'sqlite3',
-                  database: @sqlite3_db,
-                  pool:     5,
-                  timeout:  5000       }
+  def setup
+    @sqlite3_db = "./test/db/comfy_db.sqlite3"
+    @db_params  = { adapter:  'sqlite3',
+		    database: @sqlite3_db,
+		    pool:     5,
+		    timeout:  5000       }
+  end
 
 
   def test_initialize_with_sqlite3

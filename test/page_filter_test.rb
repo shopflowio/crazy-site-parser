@@ -5,9 +5,12 @@ class PageFilterTest < MiniTest::Unit::TestCase
   require './app/page_filter'
 
   def setup
-    @config = Configuration.new('test/config/nokogiri.yml')
-    @path   = 'test/bpd/Flute.html'
-    @pf = PageFilter.new(path: @path, config: @config)
+    @config    = Configuration.new('test/config/nokogiri.yml')
+    @path      = 'test/bpd/Flute.html'
+    @root_path = 'test/bpd/'
+    @pf        = PageFilter.new( path:      @path,
+                                 root_path: @root_path,
+                                 config:    @config   )
   end
 
   def test_initialize

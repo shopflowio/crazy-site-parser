@@ -1,16 +1,19 @@
 require 'debugger'
 class PageFilter
   require 'nokogiri'
-  attr_accessor :doc, :path, :title, :meta_desc, :content
+  attr_accessor :path, :root_path, :doc, :title, :meta_desc, :content
 
 ## initialization logic
   def initialize(options = {})
-    unless options[:path] and options[:config]
-      raise "This method requires a :path and :config"
+    required_options = [:root_path, :path, :config]
+    for option in required_options
+      raise "#{option} required" unless options[option]
     end
-    @path    = options[:path]
-    @config  = options[:config]
-    @doc     = Nokogiri::HTML.parse(File.open @path)
+
+    @root_path     = options[:root_path]
+    @path          = options[:path]
+    @config        = options[:config]
+    @doc           = Nokogiri::HTML.parse(File.open @path)
 
     define_ng_selectors
   end
@@ -93,7 +96,8 @@ class PageFilter
     end
     [].tap do |images|
       @content.css('img').each do |img|
-        images << img['src']
+        img_path = relativize_path(img['src'])
+        images  << img_path
       end
     end
   end
@@ -110,7 +114,17 @@ class PageFilter
     end
   end
 
+  def relativize_path(path)
+    possible_root = /http.+\.(com|org|net)/
+    path.sub!(@root_path, '')
+    path.sub!(possible_root, '')
+    path = '/' + path unless path[0] == '/'
+    path
+  end
+
 end
+
+
 
 ## I will get to this
 #  def make_paths_absolute(html, root_path)

@@ -17,10 +17,10 @@ class Website
 #  to assume that if a client has a site on a remote server, they at least have FTP access. So
 #  an FTP/SFTP class might be something to consider in the future.
 
-  attr_accessor :root_dir, :page_paths, :config
+  attr_accessor :root_path, :page_paths, :config
 
-  def initialize(root_dir, config)
-    @root_path  = root_dir
+  def initialize(root_path, config)
+    @root_path  = root_path
     @page_paths = Dir["#{@root_path}/**/*.htm*"]
     @config     = config
   end
@@ -31,7 +31,9 @@ class Website
       @page_paths.each do |path|
         data << { filename:       File.basename(path), 
                   relative_path:  path.sub(@root_path, ''),
-                  filter:         PageFilter.new(path: path, config: @config) }
+                  filter:         PageFilter.new( path:      path,
+                                                  root_path: @root_path,
+                                                  config:    @config)  }
       end
     end
   end
@@ -45,6 +47,9 @@ class Website
     pages.each do |page|
       out_path = path + page[:relative_path]
       Export.to_file(page[:filter].to_html, out_path)
+      unless page[:filter].content.nil?
+        Export.images(page[:filter].images, @root_path, path)
+      end
     end
   end
 
