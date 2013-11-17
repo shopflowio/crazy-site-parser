@@ -97,7 +97,7 @@ class PageFilter
     [].tap do |images|
       @content.css('img').each do |img|
         img_path = relativize_path(img['src'])
-        images  << img_path
+        images  << img_path unless /http.+\.(com|org|net)/.match img_path
       end
     end
   end
