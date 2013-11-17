@@ -1,0 +1,35 @@
+db_params:
+
+  adapter:  sqlite3
+  database: ./test/db/comfy_db.sqlite3
+  pool:     5
+  timeout:  5000
+
+
+for_each_page:
+
+  create_new:
+    - page
+    - block
+
+  dump_content_into:
+    - page.content
+    - block.content
+
+  link_these_fields:
+    block.page_id: page.id
+
+  fill_these_fields_with:
+    page:
+      site_id:        1
+      layout_id:      1
+      parent_id:      1
+      label:          $title
+      slug:           $filename
+      full_path:      /$filename
+      position:       0
+      children_count: 0
+      is_published:   true
+      is_shared:      false
+    block:
+      identifier: content
