@@ -4,17 +4,25 @@ class Global
 #   Also it helps cut down on repititions and makes everything more robust.
 
 
+#- Yaml paths
+
+#  Here we define the default paths for the configuration files. Currently there are two,
+#  architect.yml and page_filter.yml.
+
+  ARCHITECT_YML   = './config/architect.yml'
+
+  PAGE_FILTER_YML = './config/page_filter.yml'
+
+
 #- Database Configuration
 
-#  The database.yml can contain anything, but only the fields specified in the array will be recognized.
-#  The Modeller class will ignore any option passed that doesn't exist in DB_YML_FIELDS
-#  Generate.db_yml will only generate fields listed here.
+#  Only the fields specified in the array will be recognized.
+#  The Modeller class will ignore any option passed that doesn't exist in DB_PARAMS.
+#  Generate.architect_yml will only generate fields listed here.
 
-  DB_YML        = './config/database.yml'
-
-  DB_YML_FIELDS = [ 'adapter',
-                    'database',
-                    'pool',
-                    'timeout' ]
+  DB_PARAMS = [ 'adapter',
+                'database',
+                'pool',
+                'timeout' ]
 
 end

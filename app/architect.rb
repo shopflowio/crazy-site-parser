@@ -1,3 +1,4 @@
+require 'debugger'
 class Architect
 #-- Summary
 
@@ -15,18 +16,38 @@ class Architect
 
 #  For convention, keys we set are symbols, and keys they set are strings.
 
-  require './app/*'
+  require './app/modeller'
+  require './app/configuration'
+  require './app/website'
   require './config/global'
 
-  attr_accessor :db_params, :models, :linked_fields
+  attr_accessor :db_params, :models, :website
 
-  def initialize(yml)
+  def initialize(yml_path = nil)
+    yml = YAML.load_file(yml_path || Global::ARCHITECT_YML)
+
     @db_params   = yml['db_params']
     @page_params = yml['for_each_page']
-    @models      = get_models
 
-    @models.collect! { |m| add_params_to(m) }
+    symbolize_keys(@db_params)
+
+    @models      = get_models
+    @models.each do |model|
+      add_params_to(model)
+    end
+    
+    filter_config = Configuration.new(Global::PAGE_FILTER_YML)
+    @website      = Website.new(yml['website_directory'], filter_config)
   end
+
+
+  #- Model preparation --------------------------------------------------------------#
+
+  # model_layout = { model:          ActualModel,
+  #                  referrer:       name of model in yml (like "page", instead of "CmsPage"),
+  #                  content_field:  name of the content field on the model,
+  #                  static_fields:  { 'each_field' => we keep these keys as strings,
+  #                                    'etc'        => the list goes on              }
 
   def get_models
     [].tap do |models|
@@ -49,32 +70,47 @@ class Architect
     end
 
     # define the model's static fields
-    fields = @page_params['fill_in_these_fields_with'][model[:referrer]]
+    fields = @page_params['fill_these_fields_with'][model[:referrer]]
     static_fields = {}
 
     fields.each_key do |key|
-      value = fields[key]
-      value = convert_if_integer(value)
-      value = convert_if_boolean(value)
-      static_fields.store(key, value)
+      static_fields.store(key, fields[key])
     end
     model.store(:static_fields, static_fields)
   end
+  #---------------------------------------------------------------------------------#
+
+  #- Actions -----------------------------------------------------------------------#
+  def build_site(path, options = {})
+    # this whole method could probably be here, instead of in the Website class
+    @website.build_site(path, options)
+  end
+
+  def dump_to_db
+    pages = @website.get_page_filters
+
+    for page in pages
+      content = page[:filter].parse_content
+      @models.each do |model|
+        m =             model[:model].new
+        m.send(         model[:content_field], content)
+        for field in    model[:static_fields]
+          m.send(field, model[:static_fields][field])
+        end
+        m.save!
+      end
+    end
+  end
+
+
 
 private
 
-  def convert_if_integer(value)
-    value.to_i if /^\d+$/.match value
-  end
-
-  def convert_if_boolean(value)
-    # there has to be a better way to write this
-    boolean = /^(true|false)$/.match value
-    if boolean
-      value = true  if boolean[1] == 'true'
-      value = false if boolean[1] == 'false'
+  def symbolize_keys(hash)
+  # this is taken from Rails
+    hash.keys.each do |k|
+      hash[(k.to_sym rescue k) || k] = hash.delete(k)
     end
-    value
   end
 
 end

@@ -18,7 +18,7 @@ class Modeller
     valid_params = {}
     if options[:adapter] and options[:database]
       options.each_key do |key|
-        if Global::DB_YML_FIELDS.include? key.to_s
+        if Global::DB_PARAMS.include? key.to_s
           valid_params.store(key, options[key])
         end
       end

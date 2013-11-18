@@ -1,0 +1,20 @@
+title_selector:            at_css('title').text if at_css('title')
+meta_description_selector: at_css('meta[name="DESCRIPTION"]')['content'] if at_css('meta[name="DESCRIPTION"]')
+content_selector:          at_css('table[width="622"]')
+
+element_selectors:
+  - css('p').to_html
+  - css('img').to_html
+
+seperator_string:          <br /><br />
+
+elements_to_seperate:
+  - p
+  - img
+
+encode_html_as:            Windows-1252
+condense_spaces:           true
+
+characters_to_strip:
+  - \n
+
