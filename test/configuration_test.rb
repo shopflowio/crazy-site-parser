@@ -12,9 +12,9 @@ class ConfigurationTest < MiniTest::Unit::TestCase
     c = Configuration.new(@yml)
 
     for selector in c.selectors
-      assert selector[1].instance_of?          String
+      assert selector[1].instance_of?       String
     end
-    assert c.seperater_string.instance_of?  String
+    assert c.seperator_string.instance_of?  String
     assert c.element_selectors.instance_of? Array
   end
 
