@@ -82,7 +82,6 @@ class Architect
 
   #- Actions -----------------------------------------------------------------------#
   def build_site(path, options = {})
-    # this whole method could probably be here, instead of in the Website class
     @website.build_site(path, options)
   end
 
