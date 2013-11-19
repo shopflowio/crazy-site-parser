@@ -53,7 +53,6 @@ class Architect
   #                  content_field:  name of the content field on the model,
   #                  static_fields:  { 'each_field' => we keep these keys as strings,
   #                                    'etc'        => the list goes on              }
-  #                  linked_fields:  {
 
   def get_models
     [].tap do |models|
@@ -101,44 +100,81 @@ class Architect
     @website.build_site(path, options)
   end
 
+  # Scrape the site and deposit into the db
   def dump_to_db
-    pages = @website.get_page_filters
-
+    # First we get a hash for every page, laid out like this: { filter:        PageFilter instance,
+    pages = @website.get_page_filters                        #  filename:      'the page's filename',
+                                                             #  relative_path: 'the directory for the file' }
     for page in pages
-      data     = page[:filter].parse_page
-      filename = page[:filename]
-      title    = data[:title]
+      # parse_page gives us a hash with data parsed from the page, laid out like this:
+      data     = page[:filter].parse_page                    #{ title:         'the page's title',
+      filename = page[:filename]                             #  meta_desc:     'the meta description',
+      title    = data[:title]                                #  content:       'teh scraped content' }
       content  = data[:content]
-      variables = assign_variables(title, filename)
-puts "\n\n--------#{variables}-------------"
 
+      # with this information we can now prepare our variables
+      # so for every page, we render $title as data[:title] and $filename as page[:filename] 
+      variables = assign_variables( title, filename )
+
+      # now for every page, this block is called for each model listed in the yaml
       @models.each do |model|
-        regexp = Regexp.new(model[:referrer])
+
+        # the :referrer is how the model was listed in the yaml
+        # the modeller is pretty smart, it'll give you the model with the closest match
+        # so for cms_page, you can just put 'page', and for wp_post, 'post'
+        # the Architect remembers this name from the yaml as the :referrer
+        # it uses the :referrer to sub out the model name, when you put attributes like 'page.content'
+        # so you can call a wp_post a 'post', but then for each attribute you must use 'post'
+        # here we create our regexp, for subbing the model later from attributes stored in @linked_fields
+        regexp = Regexp.new( model[:referrer] )
+
+        # here we create a new instance of the model class, and assign the parsed content to its content field
         m     = model[:model].new
-        m.send(model[:content_field] + '=', content)
+        m.send( model[:content_field] + '=', content )
 
-        @linked_fields.each do |link|
-          link.each do |key, value|
-	    if regexp.match value
-	      attr_to_save = value.sub(regexp, '').tr('.', '')
-	      @link_writer.puts attr_to_save
-	    elsif regexp.match key
-	      linked_field = key.sub(regexp, '').tr('.', '')
-	      loaded_attr  = @link_reader.gets
-	      m.send(linked_field + '=', loaded_attr)
-	    end
-          end
-        end
-
+        # before the linked fields, we define the static fields
+        # the linked fields could have potential dependency problems otherwise
+        # we already have all the info we need to define these fields
         model[:static_fields].each do |field|
           field.tap do |attr, value|
+
+            # if the field's value is a variable, process it
             if /\$/.match value.to_s
               variables.each do |var, val|
                 var = Regexp.new(var.sub(/\$/, '\$'))
                 value = value.sub(var, val) if var.match value
               end
             end
-            m.send(attr + '=', value)
+            m.send(attr + '=', value) # attribute is assigned
+          end
+        end
+
+        # now we begin to process the linked fields
+        @linked_fields.each do |link|
+          link.each do |attr_key, attr_value|
+
+            # currently, we use an IO.pipe, @link_reader and @link_writer, to pass values between the models
+            # this is just a quick hack to getting something working,
+            # it'll quickly fall apart if we add more than 2 models, or more than 1 linked field
+
+            # if the value in the field belongs to the model, we're going to retrieve it and put it in the pipe
+	    if regexp.match attr_value
+	      attr_to_retrieve = attr_value.sub( regexp, '' ).tr( '.', '' )
+
+              # if the attr to retrieve is :id (which it likely is), we'll need to save the model first
+              # this could be a potential dependency problem, if a validated attribute hasn't been defined
+              m.save! if attr_to_retrieve == 'id'
+
+              # now we retrieve the attribute and put it in the pipe
+              retrieved_attr   = m.send( attr_to_retrieve.to_sym )
+	      @link_writer.puts retrieved_attr
+
+            # elsif this is an attribute to be ultimately saved to this model, read the value from the pipe
+	    elsif regexp.match attr_key
+	      linked_field   = attr_key.sub( regexp, '' ).tr( '.', '' )
+	      loaded_attr    = @link_reader.gets.chomp
+	      m.send( linked_field + '=', loaded_attr ) # attribute is assigned
+	    end
           end
         end
 	m.save!
