@@ -23,6 +23,7 @@ class Architect
 
   attr_accessor :db_params, :models, :website
 
+
   def initialize(yml_path = nil)
     yml = YAML.load_file(yml_path || Global::ARCHITECT_YML)
 
@@ -31,7 +32,11 @@ class Architect
 
     symbolize_keys(@db_params)
 
-    @models      = get_models
+    @models        = get_models
+    @linked_fields = []
+    establish_links
+    @link_reader, @link_writer = IO.pipe
+
     @models.each do |model|
       add_params_to(model)
     end
@@ -48,6 +53,7 @@ class Architect
   #                  content_field:  name of the content field on the model,
   #                  static_fields:  { 'each_field' => we keep these keys as strings,
   #                                    'etc'        => the list goes on              }
+  #                  linked_fields:  {
 
   def get_models
     [].tap do |models|
@@ -69,6 +75,7 @@ class Architect
       end
     end
 
+
     # define the model's static fields
     fields = @page_params['fill_these_fields_with'][model[:referrer]]
     static_fields = {}
@@ -78,6 +85,15 @@ class Architect
     end
     model.store(:static_fields, static_fields)
   end
+
+  def establish_links
+    # store linked fields, if any
+    @page_params['link_these_fields'].each do |key, value|
+      @linked_fields << { key => value }
+    end
+  end
+
+
   #---------------------------------------------------------------------------------#
 
   #- Actions -----------------------------------------------------------------------#
@@ -89,14 +105,44 @@ class Architect
     pages = @website.get_page_filters
 
     for page in pages
-      content = page[:filter].parse_content
+      data     = page[:filter].parse_page
+      filename = page[:filename]
+      title    = data[:title]
+      content  = data[:content]
+      variables = assign_variables(title, filename)
+puts "\n\n--------#{variables}-------------"
+
       @models.each do |model|
-        m =             model[:model].new
-        m.send(         model[:content_field], content)
-        for field in    model[:static_fields]
-          m.send(field, model[:static_fields][field])
+        regexp = Regexp.new(model[:referrer])
+        m     = model[:model].new
+        m.send(model[:content_field] + '=', content)
+
+        @linked_fields.each do |link|
+          link.each do |key, value|
+	    if regexp.match value
+	      attr_to_save = value.sub(regexp, '').tr('.', '')
+	      @link_writer.puts attr_to_save
+	    elsif regexp.match key
+	      linked_field = key.sub(regexp, '').tr('.', '')
+	      loaded_attr  = @link_reader.gets
+	      m.send(linked_field + '=', loaded_attr)
+	    end
+          end
         end
-        m.save!
+
+        model[:static_fields].each do |field|
+          field.tap do |attr, value|
+            if /\$/.match value.to_s
+              variables.each do |var, val|
+                var = Regexp.new(var.sub(/\$/, '\$'))
+                value = value.sub(var, val) if var.match value
+              end
+            end
+            m.send(attr + '=', value)
+          end
+        end
+	m.save!
+puts m.inspect
       end
     end
   end
@@ -110,6 +156,11 @@ private
     hash.keys.each do |k|
       hash[(k.to_sym rescue k) || k] = hash.delete(k)
     end
+  end
+
+  def assign_variables(title, filename)
+    title_var    = { '$title'    => title }
+    filename_var = { '$filename' => filename }
   end
 
 end

@@ -1,7 +1,7 @@
 db_params:
 
   adapter:  sqlite3
-  database: ./test/db/comfy_db.sqlite3
+  database: /home/jim/src/comfy_site/db/development.sqlite3
   pool:     5
   timeout:  5000
 

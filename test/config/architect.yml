@@ -27,7 +27,7 @@ for_each_page:
       site_id:        1
       layout_id:      1
       parent_id:      1
-      label:          $title
+      label:          $filename
       slug:           $filename
       full_path:      /$filename
       position:       0

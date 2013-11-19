@@ -1,0 +1,162 @@
+[1m[1;34mObject.methods[0m[0m: yaml_tag
+[1m[1;34mActiveModel::Naming#methods[0m[0m: model_name
+[1m[1;34mActiveSupport::Benchmarkable#methods[0m[0m: benchmark  silence
+[1m[1;34mActiveSupport::DescendantsTracker#methods[0m[0m: descendants  direct_descendants
+[1m[1;34mActiveRecord::ConnectionHandling#methods[0m[0m: 
+  clear_active_connections!      connected?         connection_id=        retrieve_connection
+  clear_all_connections!         connection         connection_pool     
+  clear_cache!                   connection_config  establish_connection
+  clear_reloadable_connections!  connection_id      remove_connection   
+[1m[1;34mActiveRecord::QueryCache::ClassMethods#methods[0m[0m: cache  uncached
+[1m[1;34mActiveRecord::Querying#methods[0m[0m: 
+  any?          destroy      find_by!               first!               includes  minimum     reorder  update_all
+  average       destroy_all  find_by_sql            first_or_create      joins     none        select   where     
+  calculate     distinct     find_each              first_or_create!     last      offset      sum    
+  count         eager_load   find_in_batches        first_or_initialize  last!     order       take   
+  count_by_sql  except       find_or_create_by      from                 limit     pluck       take!  
+  create_with   exists?      find_or_create_by!     group                lock      preload     uniq   
+  delete        find         find_or_initialize_by  having               many?     readonly    unscope
+  delete_all    find_by      first                  ids                  maximum   references  update 
+[1m[1;34mActiveModel::Translation#methods[0m[0m: human_attribute_name
+[1m[1;34mActiveRecord::Translation#methods[0m[0m: i18n_scope  lookup_ancestors
+[1m[1;34mActiveRecord::DynamicMatchers#methods[0m[0m: respond_to?
+[1m[1;34mActiveRecord::Explain#methods[0m[0m: collecting_queries_for_explain  exec_explain
+[1m[1;34mActiveRecord::Persistence::ClassMethods#methods[0m[0m: create  instantiate
+[1m[1;34mActiveRecord::ReadonlyAttributes::ClassMethods#methods[0m[0m: attr_readonly  readonly_attributes
+[1m[1;34mActiveRecord::ModelSchema::ClassMethods#methods[0m[0m: 
+  column_methods_hash  columns_hash            inheritance_column     reset_column_information  sequence_name=
+  column_names         content_columns         inheritance_column=    reset_sequence_name       table_exists? 
+  column_types         decorate_columns        initialize_attributes  reset_table_name          table_name    
+  columns              full_table_name_prefix  quoted_table_name      sequence_name             table_name=   
+[1m[1;34mActiveRecord::Inheritance::ClassMethods#methods[0m[0m: 
+  abstract_class   abstract_class?  descends_from_active_record?  new       symbolized_base_class
+  abstract_class=  base_class       finder_needs_type_condition?  sti_name  symbolized_sti_name  
+[1m[1;34mActiveRecord::Scoping::ClassMethods#methods[0m[0m: current_scope  current_scope=
+[1m[1;34mActiveRecord::Scoping::Default::ClassMethods#methods[0m[0m: before_remove_const  unscoped
+[1m[1;34mActiveRecord::Scoping::Named::ClassMethods#methods[0m[0m: scope_attributes  scope_attributes?
+[1m[1;34mActiveRecord::Sanitization::ClassMethods#methods[0m[0m: quote_value  sanitize
+[1m[1;34mActiveModel::DeprecatedMassAssignmentSecurity::ClassMethods#methods[0m[0m: attr_accessible  attr_protected
+[1m[1;34mActiveModel::Conversion::ClassMethods#methods[0m[0m: _to_partial_path
+[1m[1;34mActiveModel::Validations::ClassMethods#methods[0m[0m: 
+  clear_validators!  validate  validates  validates!  validates_each  validates_with  validators  validators_on
+[1m[1;34mActiveModel::Callbacks#methods[0m[0m: define_model_callbacks
+[1m[1;34mActiveSupport::Callbacks::ClassMethods#methods[0m[0m: 
+  __callback_runner_name        __define_callbacks               __reset_runner      define_callbacks  set_callback 
+  __callback_runner_name_cache  __generate_callback_runner_name  __update_callbacks  reset_callbacks   skip_callback
+[1m[1;34mActiveModel::Validations::HelperMethods#methods[0m[0m: 
+  validates_absence_of       validates_exclusion_of  validates_length_of      
+  validates_acceptance_of    validates_format_of     validates_numericality_of
+  validates_confirmation_of  validates_inclusion_of  validates_size_of        
+[1m[1;34mActiveRecord::Validations::ClassMethods#methods[0m[0m: 
+  create!  validates_associated  validates_presence_of  validates_uniqueness_of
+[1m[1;34mActiveRecord::CounterCache::ClassMethods#methods[0m[0m: decrement_counter  increment_counter  reset_counters
+[1m[1;34mActiveRecord::Locking::Optimistic::ClassMethods#methods[0m[0m: 
+  column_defaults  locking_column=   quoted_locking_column  update_counters
+  locking_column   locking_enabled?  reset_locking_column 
+[1m[1;34mActiveModel::AttributeMethods::ClassMethods#methods[0m[0m: 
+  alias_attribute         attribute_method_prefix  define_attribute_method    
+  attribute_method_affix  attribute_method_suffix  generated_attribute_methods
+[1m[1;34mActiveRecord::AttributeMethods::ClassMethods#methods[0m[0m: 
+  attribute_method?             define_attribute_methods              method_defined_within?    
+  attribute_methods_generated?  inherited                             undefine_attribute_methods
+  attribute_names               instance_method_already_implemented?
+[1m[1;34mActiveRecord::AttributeMethods::Read::ClassMethods#methods[0m[0m: cache_attribute?  cache_attributes  cached_attributes
+[1m[1;34mActiveRecord::AttributeMethods::PrimaryKey::ClassMethods#methods[0m[0m: 
+  dangerous_attribute_method?  get_primary_key  primary_key=        reset_primary_key
+  define_method_attribute      primary_key      quoted_primary_key
+[1m[1;34mActiveRecord::AttributeMethods::Serialization::ClassMethods#methods[0m[0m: serialize
+[1m[1;34mActiveModel::Validations::Callbacks::ClassMethods#methods[0m[0m: after_validation  before_validation
+[1m[1;34mActiveRecord::Associations::ClassMethods#methods[0m[0m: belongs_to  has_and_belongs_to_many  has_many  has_one
+[1m[1;34mActiveModel::SecurePassword::ClassMethods#methods[0m[0m: has_secure_password
+[1m[1;34mActiveRecord::NestedAttributes::ClassMethods#methods[0m[0m: accepts_nested_attributes_for
+[1m[1;34mActiveRecord::Aggregations::ClassMethods#methods[0m[0m: composed_of
+[1m[1;34mActiveRecord::Transactions::ClassMethods#methods[0m[0m: after_commit  after_rollback  transaction
+[1m[1;34mActiveRecord::Reflection::ClassMethods#methods[0m[0m: 
+  create_reflection       reflect_on_all_aggregations  reflect_on_all_autosave_associations
+  reflect_on_aggregation  reflect_on_all_associations  reflect_on_association              
+[1m[1;34mActiveRecord::Store::ClassMethods#methods[0m[0m: _store_accessors_module  store  store_accessor
+[1m[1;34mActiveRecord::Core::ClassMethods#methods[0m[0m: 
+  ===  arel_engine  arel_table  generated_feature_methods  initialize_generated_modules  inspect
+[1m[1;34mActiveRecord::DeprecatedFinders#methods[0m[0m: all  default_scope  scope  scoped  with_scope
+[1m[1;34mActiveRecord::Base.methods[0m[0m: 
+  _attr_readonly          around_create                       partial_updates=                         
+  _attr_readonly=         around_destroy                      partial_updates?                         
+  _attr_readonly?         around_save                         partial_updates_with_deprecation         
+  _commit_callbacks       around_update                       partial_updates_with_deprecation=        
+  _commit_callbacks=      attribute_aliases                   partial_updates_with_deprecation?        
+  _commit_callbacks?      attribute_aliases=                  partial_updates_without_deprecation      
+  _create_callbacks       attribute_aliases?                  partial_updates_without_deprecation=     
+  _create_callbacks=      attribute_method_matchers           partial_updates_without_deprecation?     
+  _create_callbacks?      attribute_method_matchers=          partial_writes                           
+  _destroy_callbacks      attribute_method_matchers?          partial_writes=                          
+  _destroy_callbacks=     attribute_types_cached_by_default   partial_writes?                          
+  _destroy_callbacks?     attribute_types_cached_by_default=  pluralize_table_names                    
+  _find_callbacks         attribute_types_cached_by_default?  pluralize_table_names=                   
+  _find_callbacks=        before_create                       pluralize_table_names?                   
+  _find_callbacks?        before_destroy                      primary_key_prefix_type                  
+  _initialize_callbacks   before_save                         primary_key_prefix_type=                 
+  _initialize_callbacks=  before_update                       record_timestamps                        
+  _initialize_callbacks?  cache_timestamp_format              record_timestamps=                       
+  _rollback_callbacks     cache_timestamp_format=             record_timestamps?                       
+  _rollback_callbacks=    cache_timestamp_format?             reflections                              
+  _rollback_callbacks?    configurations                      reflections=                             
+  _save_callbacks         configurations=                     reflections?                             
+  _save_callbacks=        connection_handler                  schema_format                            
+  _save_callbacks?        connection_handler=                 schema_format=                           
+  _touch_callbacks        default_connection_handler          serialized_attributes                    
+  _touch_callbacks=       default_connection_handler=         serialized_attributes=                   
+  _touch_callbacks?       default_connection_handler?         serialized_attributes?                   
+  _update_callbacks       default_scopes                      skip_time_zone_conversion_for_attributes 
+  _update_callbacks=      default_scopes=                     skip_time_zone_conversion_for_attributes=
+  _update_callbacks?      default_scopes?                     skip_time_zone_conversion_for_attributes?
+  _validate_callbacks     default_timezone                    store_full_sti_class                     
+  _validate_callbacks=    default_timezone=                   store_full_sti_class=                    
+  _validate_callbacks?    disable_implicit_join_references    store_full_sti_class?                    
+  _validation_callbacks   disable_implicit_join_references=   stored_attributes                        
+  _validation_callbacks=  include_root_in_json                stored_attributes=                       
+  _validation_callbacks?  include_root_in_json=               stored_attributes?                       
+  _validators             include_root_in_json?               table_name_prefix                        
+  _validators=            lock_optimistically                 table_name_prefix=                       
+  _validators?            lock_optimistically=                table_name_prefix?                       
+  after_create            lock_optimistically?                table_name_suffix                        
+  after_destroy           logger                              table_name_suffix=                       
+  after_find              logger=                             table_name_suffix?                       
+  after_initialize        nested_attributes_options           time_zone_aware_attributes               
+  after_save              nested_attributes_options=          time_zone_aware_attributes=              
+  after_touch             nested_attributes_options?          timestamped_migrations                   
+  after_update            partial_updates                     timestamped_migrations=                  
+[1m[1;34mActiveRecord::Base#methods[0m[0m: 
+  _commit_callbacks       _validate_callbacks=                nested_attributes_options                
+  _commit_callbacks=      _validate_callbacks?                nested_attributes_options?               
+  _commit_callbacks?      _validation_callbacks               partial_writes                           
+  _create_callbacks       _validation_callbacks=              partial_writes?                          
+  _create_callbacks=      _validation_callbacks?              pluralize_table_names                    
+  _create_callbacks?      _validators                         pluralize_table_names?                   
+  _destroy_callbacks      _validators=                        primary_key_prefix_type                  
+  _destroy_callbacks=     _validators?                        record_timestamps                        
+  _destroy_callbacks?     attribute_aliases                   record_timestamps=                       
+  _find_callbacks         attribute_aliases?                  record_timestamps?                       
+  _find_callbacks=        attribute_method_matchers           reflections                              
+  _find_callbacks?        attribute_method_matchers?          reflections=                             
+  _initialize_callbacks   attribute_types_cached_by_default   reflections?                             
+  _initialize_callbacks=  attribute_types_cached_by_default?  schema_format                            
+  _initialize_callbacks?  cache_timestamp_format              skip_time_zone_conversion_for_attributes 
+  _rollback_callbacks     cache_timestamp_format?             skip_time_zone_conversion_for_attributes?
+  _rollback_callbacks=    configurations                      store_full_sti_class                     
+  _rollback_callbacks?    default_connection_handler          store_full_sti_class?                    
+  _save_callbacks         default_connection_handler?         table_name_prefix                        
+  _save_callbacks=        default_scopes                      table_name_prefix?                       
+  _save_callbacks?        default_timezone                    table_name_suffix                        
+  _touch_callbacks        disable_implicit_join_references    table_name_suffix?                       
+  _touch_callbacks=       include_root_in_json                time_zone_aware_attributes               
+  _touch_callbacks?       include_root_in_json=               timestamped_migrations                   
+  _update_callbacks       include_root_in_json?               validation_context                       
+  _update_callbacks=      lock_optimistically                 validation_context=                      
+  _update_callbacks?      lock_optimistically?              
+  _validate_callbacks     logger                            
+[1m[1;34minstance variables[0m[0m: 
+  [0;34m@attribute_methods_generated[0m  [0;34m@explicit_inheritance_column[0m  [0;34m@generated_attribute_methods[0m  [0;34m@inheritance_column[0m
+[1m[1;34mclass variables[0m[0m: 
+  [1;34m@@configurations[0m    [1;34m@@disable_implicit_join_references[0m  [1;34m@@primary_key_prefix_type[0m  [1;34m@@time_zone_aware_attributes[0m
+  [1;34m@@default_timezone[0m  [1;34m@@logger[0m                            [1;34m@@schema_format[0m            [1;34m@@timestamped_migrations[0m    
+[1m[1;34mlocals[0m[0m: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
