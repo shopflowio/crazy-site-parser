@@ -27,9 +27,9 @@ for_each_page:
       site_id:        1
       layout_id:      1
       parent_id:      1
-      label:          $filename
-      slug:           $filename
-      full_path:      /$filename
+      label:          ("$filename".sub(/\.[a-z]+$/, ''))
+      slug:           ('$filename'.sub(/\.[a-z]+$/, ''))
+      full_path:      ('/' + '$filename'.sub(/\.[a-z]+$/, ''))
       position:       0
       children_count: 0
       is_published:   true

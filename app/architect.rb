@@ -142,7 +142,11 @@ class Architect
             if /\$/.match value.to_s
               variables.each do |var, val|
                 var = Regexp.new(var.sub(/\$/, '\$'))
-                value = value.sub(var, val) if var.match value
+                if var.match value
+                  value = eval(value.sub(var, val))
+                end
+
+                #value = value.sub(var, val) if var.match value
               end
             end
             m.send(attr + '=', value) # attribute is assigned
