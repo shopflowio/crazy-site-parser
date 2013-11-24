@@ -10,7 +10,6 @@ class PageFilter
       raise "#{option} required" unless options[option]
     end
 
-#    @root_path     = options[:root_path]
     @path          = options[:path]
     @config        = options[:config]
     @doc           = Nokogiri::HTML.parse(File.open @path)
