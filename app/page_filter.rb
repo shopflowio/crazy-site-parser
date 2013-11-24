@@ -5,12 +5,12 @@ class PageFilter
 
 ## initialization logic
   def initialize(options = {})
-    required_options = [:root_path, :path, :config]
+    required_options = [:path, :config]
     for option in required_options
       raise "#{option} required" unless options[option]
     end
 
-    @root_path     = options[:root_path]
+#    @root_path     = options[:root_path]
     @path          = options[:path]
     @config        = options[:config]
     @doc           = Nokogiri::HTML.parse(File.open @path)
@@ -91,13 +91,21 @@ class PageFilter
   end
 
   def images
-    unless @content.instance_of? Nokogiri::XML::Element
-      raise "this method assumes your content selector returns a Nokogiri::XML::Element"
+    # This method parses images from the entire @content area, irrespective
+    # of whatever elements are parsed in parse_content. So a user could
+    # choose to parse no img tags at all and still work with the images
+    # in the site. Choosing to parse img tags only then serves to embed
+    # img tags in the parsed content, as opposed to saving images but not
+    # automatically linking them in the content.
+    return nil if @content.nil?
+
+    if @content.is_a? String
+      @content = Nokogiri::HTML.parse(@content)
     end
+
     [].tap do |images|
       @content.css('img').each do |img|
-        img_path = relativize_path(img['src'])
-        images  << img_path unless /http.+\.(com|org|net)/.match img_path
+        images  << img['src']
       end
     end
   end
@@ -114,23 +122,5 @@ class PageFilter
     end
   end
 
-  def relativize_path(path)
-    path.sub!(@root_path, '')
-    path = '/' + path unless path[0] == '/'
-    path
-  end
-
 end
 
-
-
-## I will get to this
-#  def make_paths_absolute(html, root_path)
-#    "".tap do |data|
-#      content_ng = Nokogiri::HTML.parse(html)
-#      content_ng.css('img').each do |img|
-#        img['src'] = root_path + '/' + img['src']
-#      end
-#      data << content_ng.inner_html
-#    end
-#  end

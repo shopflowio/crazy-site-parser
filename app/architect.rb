@@ -21,7 +21,7 @@ class Architect
   require './app/website'
   require './config/global'
 
-  attr_accessor :db_params, :models, :website
+  attr_accessor :db_params, :models, :website, :image_folder
 
 
   def initialize(yml_path = nil)
@@ -43,6 +43,8 @@ class Architect
     
     filter_config = Configuration.new(Global::PAGE_FILTER_YML)
     @website      = Website.new(yml['website_directory'], filter_config)
+    @image_folder = yml['export_images_to']
+    @image_folder = @image_folder + '/' unless @image_folder[-1] == '/'
   end
 
 
@@ -93,19 +95,43 @@ class Architect
   end
 
 
-  #---------------------------------------------------------------------------------#
+  #--------------------------------------------------------------------------------#
 
   #- Actions -----------------------------------------------------------------------#
   def build_site(path, options = {})
-    @website.build_site(path, options)
+    FileUtils.mkdir_p path
+
+    pages = @website.pages
+    pages.each do |page|
+      File.open(path + page[:relative_path], 'w') do |f|
+        f << page[:filter].to_html
+      end
+    end
+  end
+
+  def export_images
+    failed = []
+    FileUtils.mkdir_p   @image_folder
+
+    @website.images.each do |img_path|
+      img_src = img_path
+      outpath = @image_folder + File.basename(img_path)
+
+      begin
+	FileUtils.copy_file(img_src, outpath)
+      rescue Errno::ENOENT
+        failed << img_path
+      end
+    end
+    puts "Failed: #{failed * ', '}"
   end
 
   # Scrape the site and deposit into the db
   def dump_to_db
     # First we get a hash for every page, laid out like this: { filter:        PageFilter instance,
-    pages = @website.get_page_filters                        #  filename:      'the page's filename',
+    pages = @website.pages                                   #  filename:      'the page's filename',
                                                              #  relative_path: 'the directory for the file' }
-    for page in pages
+    pages.each do |page|
       # parse_page gives us a hash with data parsed from the page, laid out like this:
       data     = page[:filter].parse_page                    #{ title:         'the page's title',
       filename = page[:filename]                             #  meta_desc:     'the meta description',
@@ -145,8 +171,6 @@ class Architect
                 if var.match value
                   value = eval(value.sub(var, val))
                 end
-
-                #value = value.sub(var, val) if var.match value
               end
             end
             m.send(attr + '=', value) # attribute is assigned

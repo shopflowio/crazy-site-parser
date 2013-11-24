@@ -11,12 +11,8 @@ class WebsiteTest < MiniTest::Unit::TestCase
     @website  = Website.new(@site_path, config)
   end
 
-  def test_build_site
-    @website.build_site('./bpd_scraped', force: true)
-    original_pages  = Dir["#{@site_path}/**/*.htm*"]
-    generated_pages = Dir["#{@out_path}/**/*.htm*"]
-
-    assert generated_pages.count == original_pages.count
+  def test_images
+    p @website.images
   end
 
 end

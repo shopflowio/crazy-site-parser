@@ -27,4 +27,10 @@ class ArchitectTest < MiniTest::Unit::TestCase
     end
   end
 
+  def test_export_images
+    @architect.export_images
+    exported_images = Dir.entries(@architect.image_folder)
+    assert exported_images.count >= @architect.website.images.count 
+  end
+
 end

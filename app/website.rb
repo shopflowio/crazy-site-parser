@@ -1,6 +1,5 @@
 class Website
   require './app/page_filter'
-  require './app/export'
 #-- Summary
 
 #  Website might be a confusing name for this class. It might be WebsiteFilter (like PageFilter),
@@ -17,12 +16,13 @@ class Website
 #  to assume that if a client has a site on a remote server, they at least have FTP access. So
 #  an FTP/SFTP class might be something to consider in the future.
 
-  attr_accessor :root_path, :page_paths, :config
+  attr_accessor :root_path, :page_paths, :pages, :config
 
   def initialize(root_path, config)
     @root_path  = root_path
     @page_paths = Dir["#{@root_path}/**/*.htm*"]
     @config     = config
+    @pages      = get_page_filters
   end
 
 
@@ -32,25 +32,22 @@ class Website
         data << { filename:       File.basename(path), 
                   relative_path:  path.sub(@root_path, ''),
                   filter:         PageFilter.new( path:      path,
-                                                  root_path: @root_path,
                                                   config:    @config)  }
       end
     end
   end
 
-  def build_site(path, options = {})
-    unless options[:force]
-      raise "#{path} already exists" if Dir.exists? path
-    end
-
-    pages = get_page_filters
-    pages.each do |page|
-      out_path = path + page[:relative_path]
-      Export.to_file(page[:filter].to_html, out_path)
-      unless page[:filter].content.nil?
-        Export.images(page[:filter].images, @root_path, path)
+  def images
+    images = []
+    @pages.each do |page|
+      img_paths = page[:filter].images
+      unless img_paths.nil?
+	images << img_paths.map do |img_path|
+	  @root_path + '/' + img_path
+	end
       end
     end
+    images.flatten
   end
 
 end
