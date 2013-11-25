@@ -87,6 +87,10 @@ class PageFilter
               self.node_name = actions['convert_to']
             end
 
+            if actions['remove_attributes']
+              actions['remove_attributes'].each { |a| remove_attribute(a) }
+            end
+
             # find actions that match attribute names
             attributes = attribute_nodes.map { |node| node.name }
             attribute_actions = actions.keys.map { |key| key if attributes.include? key }.compact

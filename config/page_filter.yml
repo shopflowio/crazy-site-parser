@@ -17,6 +17,10 @@ for_each_element:
   p(class=lg-subhead):
     convert_to:            h1
 
+  h1:
+    remove_attributes:
+      - class
+
   img:
     surround_with:         <br />
     src:                   File.basename('$src')
