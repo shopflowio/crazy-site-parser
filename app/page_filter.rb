@@ -52,7 +52,7 @@ class PageFilter
   end
 
   def clean_content(c)
-    c = Nokogiri::HTML.parse(c)                              # create Nokogiri doc
+    c = Nokogiri::HTML::DocumentFragment.parse(c)                              # create Nokogiri doc
     @config.for_each_element.each do |e|                     # for each element to operate on...
       e.tap do |element, actions|
 
@@ -61,9 +61,9 @@ class PageFilter
 	  attribute  = /[a-z]+\=/.match(element)[0].chop
 	  value      = /\=.+\)/.match(element)[0].chop.reverse.chop.reverse # crazy
 	  actual_el  = /^[a-z]+\(/.match(element)[0].chop
-	  xpath_code = "//#{actual_el}[@#{attribute}='#{value}']"
+	  xpath_code = "#{actual_el}[@#{attribute}='#{value}']"
 	else
-	  xpath_code = "//#{element}"
+	  xpath_code = element
 	end
 
         # now operate on each occurence of that element
