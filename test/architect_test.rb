@@ -23,6 +23,7 @@ class ArchitectTest < MiniTest::Unit::TestCase
     @architect.dump_to_db
     assert model.count > old_count
     model.all.sample(2).tap do |m1, m2|
+debugger
       assert m1.slug != m2.slug
     end
   end

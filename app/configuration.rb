@@ -12,7 +12,7 @@ class Configuration
 #  So every selector in the yaml file gets evaluated as ruby code, and we can use Nokogiri methods.
 
 
-  attr_accessor :selectors, :element_selectors, :seperator_string, :elements_to_seperate,
+  attr_accessor :selectors, :element_selectors, :for_each_element,
                 :encoding, :condense_spaces, :characters_to_strip
 
   def initialize(yml_path)
@@ -24,8 +24,6 @@ class Configuration
                    content_selector:          yml['content_selector']        }
 
     @element_selectors    =                   yml['element_selectors']
-    @seperator_string     =                   yml['seperator_string']
-    @elements_to_seperate =                   yml['elements_to_seperate']
     @encoding             =                   yml['encode_html_as']
     @condense_spaces      =                   yml['condense_spaces']
     @characters_to_strip  =                   yml['characters_to_strip']
@@ -33,6 +31,8 @@ class Configuration
     unless @characters_to_strip.nil?
       @characters_to_strip.map! { |a| a = "\n" if a == "\\n" }
     end
+
+    @for_each_element     =                   yml['for_each_element']
 
   end
 

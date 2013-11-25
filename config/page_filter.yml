@@ -6,11 +6,6 @@ element_selectors:
   - css('p').to_html
   - css('img').to_html
 
-seperator_string:          <br /><br />
-
-elements_to_seperate:
-  - p
-  - img
 
 encode_html_as:            Windows-1252
 condense_spaces:           true
@@ -18,3 +13,13 @@ condense_spaces:           true
 characters_to_strip:
   - \n
 
+for_each_element:
+  p:
+    surround_with:         <br />
+
+  p(class=lg-subhead):
+    convert_to:            h1
+
+  img:
+    surround_with:         <br />
+    src:                   File.basename('$src')

@@ -52,28 +52,65 @@ class PageFilter
   end
 
   def clean_content(c)
-    c = seperate_elements(c)
-    c = c.encode(@config.encoding)
-    c = condense_spaces(c)
-    c = strip_unwanted_characters(c)
-    c
-  end
+    c = Nokogiri::HTML.parse(c)                              # create Nokogiri doc
+    @config.for_each_element.each do |e|                     # for each element to operate on...
+      e.tap do |element, actions|
 
+        # parse attribute if one, and generate xpath selector
+	if /\([a-z]+\=.+\)/.match element
+	  attribute  = /[a-z]+\=/.match(element)[0].chop
+	  value      = /\=.+\)/.match(element)[0].chop.reverse.chop.reverse # crazy
+	  actual_el  = /^[a-z]+\(/.match(element)[0].chop
+	  xpath_code = "//#{actual_el}[@#{attribute}='#{value}']"
+	else
+	  xpath_code = "//#{element}"
+	end
 
-  def seperate_elements(parsed_elements)
-    # take a string of html and parse with Nokogiri
-    # seperate each element and append it to an array
-    # concat the elements with the seperator string
-    elements = []
-    e_t_s    = @config.elements_to_seperate
-    s_s      = @config.seperator_string
-    ng_doc = Nokogiri::HTML.parse(parsed_elements)
+        # now operate on each occurence of that element
+	c.xpath(xpath_code).each do |el|
+          el.instance_eval do
 
-    e_t_s.each do |element|
-      ng_doc.css(element).each { |e| elements << e.to_html }
+	    if actions['before_insert']
+	      add_previous_sibling(actions['before_insert']) 
+            end
+
+            if actions['after_insert']
+	      add_next_sibling(actions['after_insert'])
+            end
+
+            if actions['surround_with']
+              add_previous_sibling(actions['surround_with'])
+              add_next_sibling(actions['surround_with'])
+            end
+
+            if actions['convert_to']
+              self.node_name = actions['convert_to']
+            end
+
+            # find actions that match attribute names
+            attributes = attribute_nodes.map { |node| node.name }
+            attribute_actions = actions.keys.map { |key| key if attributes.include? key }.compact
+
+            # evaluate those attribute actions
+            attribute_actions.each do |action|
+              # check for a variable, and evaluate it if it exists
+              if /\$/.match actions[action]
+                variable    = /\$#{action}/
+                replacement = get_attribute(action)
+                value       = eval( actions[action].gsub(variable, replacement) )
+              else
+                value       = eval( actions[action] )
+              end
+
+              set_attribute(action, value)
+            end
+          end
+        end
+      end 
     end
-
-    elements * s_s
+    c = c.to_html
+    c = condense_spaces(c)           if @config.condense_spaces
+    c = strip_unwanted_characters(c) if @config.characters_to_strip
   end
 
   def condense_spaces(c)

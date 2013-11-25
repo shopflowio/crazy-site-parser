@@ -1,0 +1,81 @@
+Documentation
+
+Here's an attempt at some simple documentation. Mostly for my sake at this point, as I figure
+out how everything is going to work.
+
+pagefilter.yml:
+
+  Before anything, the html file for the page is fed into Nokogiri::HTML.parse, returning a
+  Nokogiri::HTML::Document. The first three selectors in the yaml file, 'title_selector',
+  'meta_description_selector' and 'content_selector' operate on this Nokogiri::HTML::Document.
+
+  Everything else in the yaml file operates on the data retrieved from the content_selector.
+
+  While it might make the most sense for the content_selector to return a Nokogiri::XML::Element,
+  and the ensuing element selectors to be xpath or css methods operating on that, this detail
+  is totally left up to the user. Each element selector will be instance_eval'd on the data
+  retrieved from the content_selector, and whether these make any sense or work at all is up to
+  the user.
+
+  So here are the values we currently expect in the pagefilter:
+
+    title_selector:            code to select the page title from the main Document.
+    meta_description_selector: code to select the meta description from the main Document.
+    content_selector:          code to select the content area from the main Document
+
+    element_selectors:
+      - code for each element the user would like to extract
+      - most likely xpath or css methods
+      - these are read from this list as an array
+
+    encode_html_as:            encoding, or false to not change the encoding
+    condense_spaces:           true or false, basically calls gsub!(/\ +/, ' ')
+
+    characters_to_strip:
+      - a list of characters to strip
+      - basically calls tr! on all of these, replacing them with empty strings
+
+    ---for_each_element----
+
+    The 'for_each_element' block allows logic to be applied to each element listed.
+    An example format would be:
+
+    for_each_element:
+      p:
+        surround_with:     <br />
+
+      p(class=lg-subhead):
+        convert_to:        h1
+
+      img:
+        surround_with:     <br />
+        src:               File.basename($src)
+
+    Each child under 'for_each_element' is an element. In the example, we listed p, p where the class
+    equals 'lg-subhead', and img. So in addition to just listing each element you want to operate on,
+    you can also specify attributes in parentheses, and the following set of instructions would only
+    apply to the chosen element with that specific attribute.
+
+    Under each listed element, the user specifies actions they would like to perform on that element.
+    So far the following actions are recognized:
+
+    surround_with:         a string to insert before and after each instance of the element
+    before_insert:         a string to insert before each element
+    after_insert:          a string to insert after each element
+    convert_to:            converts the element to an element listed here, while maintaining the content
+    <attribute>:           an attribute may be redefined here
+
+    --- redefining attributes ---
+
+    When redefining an attribute, the value will be interpreted as code, and eval'd on a
+    Nokogiri::XML::Element representation of the element. The attribute's original value may
+    be referenced as a variable, which would just be the attribute key preceded by a $.
+
+    In the example above, we had:
+
+    for_each_element:
+      img:
+        src: File.basename($src)
+
+    So when refining the 'src' on each 'img', we called '$src'. The app will interpret $src as being
+    the original value of src.

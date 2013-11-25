@@ -5,7 +5,7 @@ class PageFilterTest < MiniTest::Unit::TestCase
   require './app/page_filter'
 
   def setup
-    @config    = Configuration.new('test/config/nokogiri.yml')
+    @config    = Configuration.new('test/config/page_filter.yml')
     @path      = 'test/bpd/Flute.html'
     @root_path = 'test/bpd/'
     @pf        = PageFilter.new( path:      @path,
@@ -20,12 +20,6 @@ class PageFilterTest < MiniTest::Unit::TestCase
   def test_parse_content
     assert @pf.parse_content.instance_of? String
     assert !@pf.parse_content.empty?
-  end
-
-  def test_seperate_elements
-    regexp = Regexp.new(@config.seperator_string)
-
-    assert regexp.match @pf.parse_content
   end
 
   def test_images

@@ -5,7 +5,7 @@ class WebsiteTest < MiniTest::Unit::TestCase
   require './app/configuration'
 
   def setup
-    config   = Configuration.new('./test/config/nokogiri.yml')
+    config   = Configuration.new('./test/config/page_filter.yml')
     @site_path = './test/bpd'
     @out_path  = './bpd_scraped'
     @website  = Website.new(@site_path, config)
