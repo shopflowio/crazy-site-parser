@@ -17,6 +17,10 @@ for_each_element:
   p(class=lg-subhead):
     convert_to:            h1
 
+  p:
+    remove_children:
+      - img
+
   h1:
     remove_attributes:
       - class

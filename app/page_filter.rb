@@ -91,6 +91,13 @@ class PageFilter
               actions['remove_attributes'].each { |a| remove_attribute(a) }
             end
 
+            if actions['remove_children']
+              actions['remove_children'].each do |a|
+                children = xpath(a)
+                children.remove
+              end
+            end
+
             # find actions that match attribute names
             attributes = attribute_nodes.map { |node| node.name }
             attribute_actions = actions.keys.map { |key| key if attributes.include? key }.compact
