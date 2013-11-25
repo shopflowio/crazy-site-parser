@@ -1,13 +1,13 @@
 db_params:
 
   adapter:  sqlite3
-  database: ./test/db/comfy_db.sqlite3
+  database: /home/jim/src/comfy_cms/db/development.sqlite3
   pool:     5
   timeout:  5000
 
 
 website_directory: ./test/bpd
-export_images_to:  ./test/images
+export_images_to:  /home/jim/src/comfy_cms/public
 
 
 for_each_page:

@@ -14,9 +14,6 @@ characters_to_strip:
   - \n
 
 for_each_element:
-  p:
-    surround_with:         <br />
-
   p(class=lg-subhead):
     convert_to:            h1
 
