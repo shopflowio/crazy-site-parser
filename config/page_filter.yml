@@ -18,6 +18,7 @@ for_each_element:
     convert_to:            h1
 
   p:
+    remove_if_empty:       true
     remove_children:
       - img
 

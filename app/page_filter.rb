@@ -115,6 +115,10 @@ class PageFilter
 
               set_attribute(action, value)
             end
+
+            if actions['remove_if_empty']
+              remove if self.content.empty?
+            end
           end
         end
       end 
